@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-10-06
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-10-10
 #---------#---------#---------#---------#---------#--------#
 import sys
 import traceback
@@ -19,7 +19,21 @@ from ParseTree          import *
 # Lexical analysis section
 
 # Reserved words
-# TODO: Add something here ...
+reserved = {
+	'break' : 'BREAK',
+	'continue' : 'CONTINUE',
+	'while' : 'WHILE',
+	'do' : 'DO',
+	'end' : 'END',
+	'for' : 'FOR',
+	'to' : 'TO',
+	'by' : 'BY',
+	'if' : 'IF',
+	'then' : 'THEN',
+	'elif' : 'ELIF',
+	'else' : 'ELSE',
+	'int' : 'INT'
+ }
 
 tokens = [
   'ID', 'INT_LITERAL',
@@ -29,7 +43,7 @@ tokens = [
   'EXPONENTIATION',
   'LPAREN', 'RPAREN', 'SEMICOLON',
   'LBRACE', 'RBRACE'
-  ]
+  ] + list( reserved.values() )
 
 # Tokens
 
@@ -48,8 +62,7 @@ t_SEMICOLON = r';'
 
 def t_ID( t ) :
   r'[a-zA-Z_][a-zA-Z0-9_]*'
-  # TODO: Add something here ...
-
+  t.type = reserved.get( t.value, 'ID' )    # Check for reserved words
   return t
 
 def t_INT_LITERAL( t ) :
@@ -118,13 +131,23 @@ def p_semicolon_opt( p ) :
 # STATEMENTS ...
 
 # Break statement
-# TODO: Add something here ...
+def p_statement_break( p ) :
+	'statement : BREAK'
+	p[0] = Statement_Break( p.lineno( 1 ) )
 
 # Continue statement
-# TODO: Add something here ...
+def p_statement_continue( p ) :
+	'statement : CONTINUE'
+	p[0] = Statement_Continue( p.lineno( 1 ) )
 
 # Declaration statement
-# TODO: Add something here ...
+def p_statement_declaration_A( p ) :
+	'statement : INT ID'
+	p[0] = Statement_Declaration( p.lineno( 0 ), Type( p.lineno( 1 ), p[1] ), Identifier( p.lineno( 2 ), p[2] ), Literal( 0, 'int', 0 ) )
+
+def p_statement_declaration_B( p ) :
+	'statement : INT ID EQUALS expression'
+	p[0] = Statement_Declaration( p.lineno( 0 ), Type( p.lineno( 1 ), p[1] ), Identifier( p.lineno( 2 ), p[2] ), p[4] )
 
 # Expression statement
 def p_statement_expr( p ) :
@@ -132,13 +155,41 @@ def p_statement_expr( p ) :
   p[0] = Statement_Expression( p.lineno( 1 ), p[1] )
 
 # For statement
-# TODO: Add something here ...
+def p_statement_for_A( p ) :
+	'statement : FOR ID EQUALS expression TO expression DO statement_list semicolon_opt END FOR'
+	p[0] = Statement_For( p.lineno( 1 ), Identifier( p.lineno( 2 ), p[2] ), p[4], p[6], Literal( 0, 'int', 1 ), Statement_List( p.lineno( 8 ), p[8] ) )
+
+def p_statement_for_B( p ) :
+	'statement : FOR ID EQUALS expression TO expression BY expression DO statement_list semicolon_opt END FOR'
+	p[0] = Statement_For( p.lineno( 1 ), Identifier( p.lineno( 2 ), p[2] ), p[4], p[6], p[8], Statement_List( p.lineno( 10 ), p[10] ) )
 
 # If statement
-# TODO: Add something here ...
+def p_statement_if( p ) :
+	'statement : IF expression THEN statement_list semicolon_opt elif_list else_opt END IF'
+	thenStmtList = Statement_List( p.lineno( 4 ), p[4] )
+	p[0] = Statement_If( p.lineno( 1 ), p[2], thenStmtList, p[6], p[7] )
+
+def p_elif_list( p ) :
+	'''elif_list : epsilon
+							 | elif_list ELIF expression THEN statement_list semicolon_opt'''
+	if p[1] is None :
+		p[0] = []
+	else :
+		p[1].append( ( p[3], Statement_List( p.lineno( 5 ), p[5] ) ) )
+		p[0] = p[1]
+
+def p_else_opt( p ) :
+	'''else_opt : epsilon
+					  	| ELSE statement_list semicolon_opt'''
+	if p[1] is None :
+		p[0] = Statement_List( 0, [] )
+	else :
+		p[0] = Statement_List( p.lineno( 2 ), p[2] )
 
 # While statement
-# TODO: Add something here ...
+def p_statement_while( p ) :
+	'statement : WHILE expression DO statement_list semicolon_opt END WHILE'
+	p[0] = Statement_While( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ) )
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :

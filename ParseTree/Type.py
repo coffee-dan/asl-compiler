@@ -7,18 +7,16 @@ import sys
 from .common       import *
 
 #---------#---------#---------#---------#---------#--------#
-class Statement_Expression() :
-  def __init__( self, lineNum, expr ) :
-    self.m_NodeType = 'Statement_Expression'
+class Type() :
+  def __init__( self, lineNum, kind ) :
+    self.m_NodeType = 'Type'
 
     self.m_LineNum  = lineNum
-    self.m_Expr     = expr
+    self.m_Kind     = kind
 
   #---------------------------------------
   def dump( self, indent = 0, fp = sys.stdout ) :
     dumpHeaderLine( indent, self.m_LineNum,
-      'STATEMENT (EXPRESSION)', fp )
-
-    self.m_Expr.dump( indent+1, fp = fp )
+      f'TYPE ({self.m_Kind!r})', fp )
 
 #---------#---------#---------#---------#---------#--------#
