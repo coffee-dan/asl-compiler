@@ -1,0 +1,8 @@
+(   8) PROGRAM
+(   8)   STATEMENT (EXPRESSION)
+(   8)     BINARY_OP '='
+(   8)       IDENTIFIER 'a'
+(   8)       UNARY_OP '+'
+(   8)         UNARY_OP '+'
+(   8)           UNARY_OP '+'
+(   8)             LITERAL 'Integer' 1

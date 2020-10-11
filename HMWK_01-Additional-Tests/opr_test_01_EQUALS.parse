@@ -1,0 +1,11 @@
+(   8) PROGRAM
+(   8)   STATEMENT (EXPRESSION)
+(   8)     BINARY_OP '='
+(   8)       IDENTIFIER 'a'
+(   8)       BINARY_OP '='
+(   8)         IDENTIFIER 'b'
+(   8)         BINARY_OP '='
+(   8)           IDENTIFIER 'c'
+(   8)           BINARY_OP '='
+(   8)             IDENTIFIER 'd'
+(   8)             IDENTIFIER 'e'

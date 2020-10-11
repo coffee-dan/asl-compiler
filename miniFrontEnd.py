@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-09-23
+# Daniel, Ranirez G.
+# dgr2815
+# 2019-09-26
 #---------#---------#---------#---------#---------#--------#
 import sys
 import traceback
@@ -14,13 +14,14 @@ from time               import time
 
 from Exceptions         import *
 from ParseTree          import *
+from ParseTree		  	import UnaryOp
 
 #---------#---------#---------#---------#---------#--------#
 # Lexical analysis section
 
 tokens = (
   'ID', 'INT_LITERAL',
-  'PLUS', 'EQUALS',
+  'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULUS', 'POWER', 'EQUALS',
   'LPAREN', 'RPAREN', 'SEMICOLON'
   )
 
@@ -28,7 +29,12 @@ tokens = (
 
 t_EQUALS    = r'='
 t_LPAREN    = r'\('
-t_PLUS      = r'\+'
+t_PLUS    = r'\+'
+t_MINUS   = r'-'
+t_TIMES   = r'\*'
+t_DIVIDE  = r'/'
+t_MODULUS  = r'%'
+t_POWER  = r'\^'
 t_RPAREN    = r'\)'
 t_SEMICOLON = r';'
 
@@ -78,7 +84,10 @@ start = 'program'
 # Precedence rules for the operators
 precedence = (
   ( 'right', 'EQUALS' ),
-  ( 'left',  'PLUS' ),
+  ( 'left',  'PLUS', 'MINUS' ),
+  ( 'left',  'TIMES', 'DIVIDE', 'MODULUS' ),
+  ( 'left',  'POWER' ),
+  ( 'right', 'UMINUS', 'UPLUS' )
   )
 
 #-------------------
@@ -98,7 +107,7 @@ def p_semicolon_opt( p ) :
 # Expression statement
 def p_statement_expr( p ) :
   'statement : expression'
-  p[0] = Statement_Expression( p.lineno(1), p[1] )
+  p[0] = Statement_Expression( p.lineno( 1 ), p[1] )
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :
@@ -123,8 +132,19 @@ def p_identifier( p ) :
 # Binary operator expression
 def p_expression_binop( p ) :
   '''expression : expression PLUS expression
-                | identifier EQUALS expression'''
-  p[0] = BinaryOp( p.lineno(2), p[2], p[1], p[3] )
+                | expression MINUS expression
+                | expression TIMES expression
+                | expression DIVIDE expression
+                | identifier MODULUS expression
+                | identifier EQUALS expression
+                | identifier POWER expression'''
+  p[0] = BinaryOp( p.lineno( 2 ), p[2], p[1], p[3] )
+
+# Unary operator expression
+def p_expression_unop( p ) :
+  '''expression : MINUS expression %prec UMINUS
+                | PLUS expression %prec UPLUS'''
+  p[0] = UnaryOp( p.lineno( 2 ), p[1], p[2] )
 
 # Parenthesized expression
 def p_expression_group( p ) :
