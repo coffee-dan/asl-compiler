@@ -1,0 +1,22 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [3]
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'n'
+(   7)       LITERAL 'int' 10
+(  10)     STATEMENT (DECLARATION)
+(  10)       TYPE ('int')
+(  10)       IDENTIFIER 'fact'
+(  10)       LITERAL 'int' 1
+(  13)     STATEMENT (FOR)
+(  13)       IDENTIFIER 'i'
+(  13)       LITERAL 'int' 1
+(  13)       IDENTIFIER 'n'
+(   0)       LITERAL 'int' 1
+(  14)       STATEMENT LIST [1]
+(  14)         STATEMENT (EXPRESSION)
+(  14)           BINARY_OP '='
+(  14)             IDENTIFIER 'fact'
+(  14)             BINARY_OP '*'
+(  14)               IDENTIFIER 'fact'
+(  14)               IDENTIFIER 'i'

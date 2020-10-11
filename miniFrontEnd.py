@@ -1,6 +1,6 @@
-# Daniel, Ranirez G.
-# dgr2815
-# 2019-09-26
+# Dalio, Brian A.
+# dalioba
+# 2019-10-06
 #---------#---------#---------#---------#---------#--------#
 import sys
 import traceback
@@ -14,31 +14,43 @@ from time               import time
 
 from Exceptions         import *
 from ParseTree          import *
-from ParseTree		  	import UnaryOp
 
 #---------#---------#---------#---------#---------#--------#
 # Lexical analysis section
 
-tokens = (
+# Reserved words
+# TODO: Add something here ...
+
+tokens = [
   'ID', 'INT_LITERAL',
-  'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULUS', 'POWER', 'EQUALS',
-  'LPAREN', 'RPAREN', 'SEMICOLON'
-  )
+  'EQUALS',
+  'PLUS', 'MINUS',
+  'MULTIPLY', 'DIVIDE', 'MODULUS',
+  'EXPONENTIATION',
+  'LPAREN', 'RPAREN', 'SEMICOLON',
+  'LBRACE', 'RBRACE'
+  ]
 
 # Tokens
 
+t_DIVIDE    = r'/'
 t_EQUALS    = r'='
+t_EXPONENTIATION = r'\^'
+t_LBRACE    = r'{'
 t_LPAREN    = r'\('
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_MODULUS  = r'%'
-t_POWER  = r'\^'
+t_MINUS     = r'-'
+t_MODULUS   = r'%'
+t_MULTIPLY  = r'\*'
+t_PLUS      = r'\+'
+t_RBRACE    = r'}'
 t_RPAREN    = r'\)'
 t_SEMICOLON = r';'
 
-t_ID        = r'[a-zA-Z_][a-zA-Z0-9_]*'
+def t_ID( t ) :
+  r'[a-zA-Z_][a-zA-Z0-9_]*'
+  # TODO: Add something here ...
+
+  return t
 
 def t_INT_LITERAL( t ) :
   r'\d+'
@@ -68,9 +80,6 @@ def t_error( t ) :
 
   msg = f'Illegal character "{t.value[0]}" at line {t.lexer.lineno}, column {column}.'
 
-  #t.lexer.skip( 1 ) -- We used to just skip the character.
-  #                  -- Now we throw an exception.
-
   raise LexicalError( msg )
 
 #---------#---------#---------#---------#---------#--------#
@@ -85,8 +94,8 @@ start = 'program'
 precedence = (
   ( 'right', 'EQUALS' ),
   ( 'left',  'PLUS', 'MINUS' ),
-  ( 'left',  'TIMES', 'DIVIDE', 'MODULUS' ),
-  ( 'left',  'POWER' ),
+  ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),
+  ( 'right', 'EXPONENTIATION' ),
   ( 'right', 'UMINUS', 'UPLUS' )
   )
 
@@ -94,8 +103,12 @@ precedence = (
 # PROGRAM ...
 
 def p_program( p ) :
-  'program : statement_list semicolon_opt'
+  'program : block'
   p[0] = Program( p.lineno( 1 ), p[1] )
+
+def p_block( p ) :
+  'block : LBRACE statement_list semicolon_opt RBRACE'
+  p[0] = Statement_List( p.lineno( 1 ), p[2] )
 
 def p_semicolon_opt( p ) :
   '''semicolon_opt : epsilon
@@ -104,10 +117,28 @@ def p_semicolon_opt( p ) :
 #-------------------
 # STATEMENTS ...
 
+# Break statement
+# TODO: Add something here ...
+
+# Continue statement
+# TODO: Add something here ...
+
+# Declaration statement
+# TODO: Add something here ...
+
 # Expression statement
 def p_statement_expr( p ) :
   'statement : expression'
   p[0] = Statement_Expression( p.lineno( 1 ), p[1] )
+
+# For statement
+# TODO: Add something here ...
+
+# If statement
+# TODO: Add something here ...
+
+# While statement
+# TODO: Add something here ...
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :
@@ -131,20 +162,20 @@ def p_identifier( p ) :
 
 # Binary operator expression
 def p_expression_binop( p ) :
-  '''expression : expression PLUS expression
-                | expression MINUS expression
-                | expression TIMES expression
-                | expression DIVIDE expression
-                | identifier MODULUS expression
-                | identifier EQUALS expression
-                | identifier POWER expression'''
+  '''expression : expression PLUS     expression
+                | expression MINUS    expression
+                | expression MULTIPLY expression
+                | expression DIVIDE   expression
+                | expression MODULUS  expression
+                | expression EXPONENTIATION expression
+                | identifier EQUALS   expression'''
   p[0] = BinaryOp( p.lineno( 2 ), p[2], p[1], p[3] )
 
 # Unary operator expression
 def p_expression_unop( p ) :
   '''expression : MINUS expression %prec UMINUS
-                | PLUS expression %prec UPLUS'''
-  p[0] = UnaryOp( p.lineno( 2 ), p[1], p[2] )
+                | PLUS  expression %prec UPLUS'''
+  p[0] = UnaryOp( p.lineno( 1 ), p[1], p[2] )
 
 # Parenthesized expression
 def p_expression_group( p ) :
@@ -154,7 +185,7 @@ def p_expression_group( p ) :
 # Integer literal
 def p_expression_int_literal( p ) :
   'expression : INT_LITERAL'
-  p[0] = Literal( p.lineno( 1 ), 'Integer', p[1] )
+  p[0] = Literal( p.lineno( 1 ), 'int', p[1] )
 
 # Name
 def p_expression_id( p ) :
@@ -196,13 +227,13 @@ def _main( inputFileName ) :
 
   print( f'* Reading source file {inputFileName!r} ...' )
 
-  strt = time()
-  with open( inputFileName, 'r' ) as fp :
-    data = fp.read()
-
-  print( f'    Read succeeded.  ({time()-strt:.3f}s)\n* Beginning parse ...' )
-
   try :
+    strt = time()
+    with open( inputFileName, 'r' ) as fp :
+      data = fp.read()
+
+    print( f'    Read succeeded.  ({time()-strt:.3f}s)\n* Beginning parse ...' )
+
     strt    = time()
     lexer   = ply.lex.lex()
     parser  = ply.yacc.yacc()
@@ -218,6 +249,10 @@ def _main( inputFileName ) :
 
     total = time() - begin
     print( f'# Total time {total:.3f}s.\n#----------')
+
+  except FileNotFoundError as e :
+    print( f'File {inputFileName!r} not found.' )
+    sys.exit( 1 )
 
   except LexicalError as e :
     print( 'Exception detected during lexical analysis.' )

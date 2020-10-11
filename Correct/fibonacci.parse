@@ -1,0 +1,38 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [5]
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'n'
+(   7)       LITERAL 'int' 10
+(  10)     STATEMENT (DECLARATION)
+(  10)       TYPE ('int')
+(  10)       IDENTIFIER 'previous'
+(  10)       LITERAL 'int' 0
+(  11)     STATEMENT (DECLARATION)
+(  11)       TYPE ('int')
+(  11)       IDENTIFIER 'current'
+(  11)       LITERAL 'int' 1
+(  12)     STATEMENT (DECLARATION)
+(  12)       TYPE ('int')
+(  12)       IDENTIFIER 'next'
+(   0)       LITERAL 'int' 0
+(  16)     STATEMENT (FOR)
+(  16)       IDENTIFIER 'i'
+(  16)       LITERAL 'int' 2
+(  16)       IDENTIFIER 'n'
+(   0)       LITERAL 'int' 1
+(  18)       STATEMENT LIST [3]
+(  18)         STATEMENT (EXPRESSION)
+(  18)           BINARY_OP '='
+(  18)             IDENTIFIER 'next'
+(  18)             BINARY_OP '+'
+(  18)               IDENTIFIER 'previous'
+(  18)               IDENTIFIER 'current'
+(  22)         STATEMENT (EXPRESSION)
+(  22)           BINARY_OP '='
+(  22)             IDENTIFIER 'previous'
+(  22)             IDENTIFIER 'current'
+(  23)         STATEMENT (EXPRESSION)
+(  23)           BINARY_OP '='
+(  23)             IDENTIFIER 'current'
+(  23)             IDENTIFIER 'next'

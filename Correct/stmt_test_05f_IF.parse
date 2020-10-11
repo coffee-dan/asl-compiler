@@ -1,0 +1,35 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (IF)
+(   7)       IDENTIFIER 'ac'
+(   8)       STATEMENT LIST [1]
+(   8)         STATEMENT (EXPRESSION)
+(   8)           BINARY_OP '='
+(   8)             IDENTIFIER 'ad'
+(   8)             BINARY_OP '/'
+(   8)               LITERAL 'int' 9
+(   8)               LITERAL 'int' 10
+(   0)       ELIF LIST [2]
+(   9)         IDENTIFIER 'ae'
+(  10)         STATEMENT LIST [1]
+(  10)           STATEMENT (EXPRESSION)
+(  10)             BINARY_OP '='
+(  10)               IDENTIFIER 'af'
+(  10)               BINARY_OP '%'
+(  10)                 IDENTIFIER 'ag'
+(  10)                 IDENTIFIER 'ah'
+(  11)         IDENTIFIER 'ai'
+(  12)         STATEMENT LIST [1]
+(  12)           STATEMENT (EXPRESSION)
+(  12)             BINARY_OP '='
+(  12)               IDENTIFIER 'aj'
+(  12)               BINARY_OP '^'
+(  12)                 IDENTIFIER 'ak'
+(  12)                 IDENTIFIER 'al'
+(  14)       STATEMENT LIST [1]
+(  14)         STATEMENT (EXPRESSION)
+(  14)           BINARY_OP '='
+(  14)             IDENTIFIER 'am'
+(  14)             BINARY_OP '+'
+(  14)               IDENTIFIER 'an'
+(  14)               LITERAL 'int' 1

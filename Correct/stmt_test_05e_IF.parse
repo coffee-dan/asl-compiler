@@ -1,0 +1,27 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (IF)
+(   7)       IDENTIFIER 'x'
+(   8)       STATEMENT LIST [1]
+(   8)         STATEMENT (EXPRESSION)
+(   8)           BINARY_OP '='
+(   8)             IDENTIFIER 'y'
+(   8)             BINARY_OP '+'
+(   8)               LITERAL 'int' 3
+(   8)               LITERAL 'int' 4
+(   0)       ELIF LIST [1]
+(   9)         IDENTIFIER 'z'
+(  10)         STATEMENT LIST [1]
+(  10)           STATEMENT (EXPRESSION)
+(  10)             BINARY_OP '='
+(  10)               IDENTIFIER 'aa'
+(  10)               BINARY_OP '-'
+(  10)                 LITERAL 'int' 5
+(  10)                 LITERAL 'int' 6
+(  12)       STATEMENT LIST [1]
+(  12)         STATEMENT (EXPRESSION)
+(  12)           BINARY_OP '='
+(  12)             IDENTIFIER 'ab'
+(  12)             BINARY_OP '*'
+(  12)               LITERAL 'int' 7
+(  12)               LITERAL 'int' 8

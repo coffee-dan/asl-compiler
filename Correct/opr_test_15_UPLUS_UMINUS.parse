@@ -1,0 +1,16 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [2]
+(  11)     STATEMENT (EXPRESSION)
+(  11)       BINARY_OP '='
+(  11)         IDENTIFIER 'a'
+(  11)         UNARY_OP '+'
+(  11)           UNARY_OP '-'
+(  11)             UNARY_OP '+'
+(  11)               LITERAL 'int' 1
+(  12)     STATEMENT (EXPRESSION)
+(  12)       BINARY_OP '='
+(  12)         IDENTIFIER 'a'
+(  12)         UNARY_OP '-'
+(  12)           UNARY_OP '+'
+(  12)             UNARY_OP '-'
+(  12)               LITERAL 'int' 1

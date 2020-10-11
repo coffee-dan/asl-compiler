@@ -1,0 +1,29 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (IF)
+(   7)       IDENTIFIER 'o'
+(   8)       STATEMENT LIST [1]
+(   8)         STATEMENT (EXPRESSION)
+(   8)           BINARY_OP '='
+(   8)             IDENTIFIER 'p'
+(   8)             BINARY_OP '*'
+(   8)               IDENTIFIER 'q'
+(   8)               LITERAL 'int' 17
+(   0)       ELIF LIST [2]
+(   9)         IDENTIFIER 'r'
+(  10)         STATEMENT LIST [1]
+(  10)           STATEMENT (EXPRESSION)
+(  10)             BINARY_OP '='
+(  10)               IDENTIFIER 's'
+(  10)               BINARY_OP '-'
+(  10)                 IDENTIFIER 't'
+(  10)                 LITERAL 'int' 3
+(  11)         IDENTIFIER 'u'
+(  12)         STATEMENT LIST [1]
+(  12)           STATEMENT (EXPRESSION)
+(  12)             BINARY_OP '='
+(  12)               IDENTIFIER 'v'
+(  12)               BINARY_OP '+'
+(  12)                 LITERAL 'int' 7
+(  12)                 IDENTIFIER 'w'
+(   0)       STATEMENT LIST [0]

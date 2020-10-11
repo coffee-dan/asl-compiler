@@ -1,0 +1,20 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (IF)
+(   7)       IDENTIFIER 'h'
+(   8)       STATEMENT LIST [1]
+(   8)         STATEMENT (EXPRESSION)
+(   8)           BINARY_OP '='
+(   8)             IDENTIFIER 'i'
+(   8)             BINARY_OP '/'
+(   8)               IDENTIFIER 'j'
+(   8)               IDENTIFIER 'k'
+(   0)       ELIF LIST [1]
+(   9)         IDENTIFIER 'l'
+(  10)         STATEMENT LIST [1]
+(  10)           STATEMENT (EXPRESSION)
+(  10)             BINARY_OP '='
+(  10)               IDENTIFIER 'm'
+(  10)               UNARY_OP '+'
+(  10)                 IDENTIFIER 'n'
+(   0)       STATEMENT LIST [0]

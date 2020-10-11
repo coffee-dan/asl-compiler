@@ -1,0 +1,18 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'a'
+(   7)       BINARY_OP '+'
+(   7)         BINARY_OP '+'
+(   7)           BINARY_OP '+'
+(   7)             BINARY_OP '+'
+(   7)               BINARY_OP '+'
+(   7)                 BINARY_OP '+'
+(   7)                   IDENTIFIER 'does'
+(   7)                   IDENTIFIER 'anyone'
+(   7)                 IDENTIFIER 'actually'
+(   7)               IDENTIFIER 'look'
+(   7)             IDENTIFIER 'at'
+(   7)           IDENTIFIER 'these'
+(   7)         IDENTIFIER 'testcases'

@@ -1,0 +1,58 @@
+#-----------------------------------------------------------
+# ASL version 0
+#-----------------------------------------------------------
+# Program
+
+  { <statement_list> }
+
+# Statement List -- A list of statements separated by semicolons.
+#   A semicolon may terminate the list, but this is not required.
+
+  statement [ ; statement ]* ;?
+
+#---------------------------------------
+# Statement:  Break
+
+  break
+
+#---------------------------------------
+# Statement:  Continue
+
+  continue
+
+#---------------------------------------
+# Statement:  Declaration
+
+  int <identifier> [ = <expression> ]
+
+#---------------------------------------
+# Statement:  Expression
+
+  <expression>
+
+#---------------------------------------
+# Statement:  For
+
+  for <identifer> = <expression> to <expression> [ by <expression> ] do
+    <statement_list>
+  end for
+
+#---------------------------------------
+# Statement:  If
+
+  if <expression> then
+    <statement_list>
+  [ elif <expression> then
+      <statement_list> ]*
+  [ else
+      <statement_list> ]
+  end if
+
+#---------------------------------------
+# Statement: While
+
+  while <expression> do
+    <statement_list>
+  end while
+
+#-----------------------------------------------------------

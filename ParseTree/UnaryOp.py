@@ -1,6 +1,6 @@
-# Daniel, Ranirez G.
-# dgr2815
-# 2019-09-26
+# Dalio, Brian A.
+# dalioba
+# 2019-02-27
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -13,7 +13,7 @@ class UnaryOp() :
 
     self.m_LineNum  = lineNum
     self.m_Op       = op
-    self.m_Right     = right
+    self.m_Right    = right
 
   #---------------------------------------
   def dump( self, indent = 0, fp = sys.stdout ) :

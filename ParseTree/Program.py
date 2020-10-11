@@ -1,6 +1,6 @@
-# Daniel, Ranirez G.
-# dgr2815
-# 2019-09-26
+# Dalio, Brian A.
+# dalioba
+# 2019-09-28
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -19,7 +19,6 @@ class Program() :
     dumpHeaderLine( indent, self.m_LineNum,
       'PROGRAM', fp )
 
-    for s in self.m_StmtList :
-      s.dump( indent+1, fp = fp )
+    self.m_StmtList.dump( indent+1, fp = fp )
 
 #---------#---------#---------#---------#---------#--------#
