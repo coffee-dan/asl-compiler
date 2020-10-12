@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-10-18
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-10-19
 #---------#---------#---------#---------#---------#--------#
 import sys
 import traceback
@@ -23,30 +23,45 @@ reserved = { rw : rw.upper() for rw in (
   'if', 'then', 'elif', 'else',
   'while',
   'break', 'continue',
-  'int',
+  'int', 'real',
+  'read', 'write'
   ) }
 
 tokens = [
-  'ID', 'INT_LITERAL',
+  'ID', 'INT_LITERAL', 'REAL_LITERAL',
   'EQUALS',
   'PLUS', 'MINUS',
   'MULTIPLY', 'DIVIDE', 'MODULUS',
   'EXPONENTIATION',
+  'FACTORIAL',
+  'AND', 'OR',
+  'EQUAL_TO', 'NOT_EQUAL_TO',
+  'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO',
+  'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO',
   'LPAREN', 'RPAREN', 'SEMICOLON',
   'LBRACE', 'RBRACE',
+  'COMMA'
   ] + list( reserved.values() )
 
 # Tokens
-
+t_AND       = r'&&'
 t_COMMA     = r','
+t_EQUAL_TO   = r'=='
 t_DIVIDE    = r'/'
 t_EQUALS    = r'='
 t_EXPONENTIATION = r'\^'
+t_FACTORIAL = r'!'
+t_GREATER_THAN = r'>'
+t_GREATER_THAN_OR_EQUAL_TO = r'>='
+t_LESS_THAN = r'<'
+t_LESS_THAN_OR_EQUAL_TO = r'<='
 t_LBRACE    = r'{'
 t_LPAREN    = r'\('
 t_MINUS     = r'-'
 t_MODULUS   = r'%'
 t_MULTIPLY  = r'\*'
+t_NOT_EQUAL_TO = r'<>'
+t_OR        = r'\|\|'
 t_PLUS      = r'\+'
 t_RBRACE    = r'}'
 t_RPAREN    = r'\)'
@@ -55,6 +70,11 @@ t_SEMICOLON = r';'
 def t_ID( t ) :
   r'[a-zA-Z_][a-zA-Z0-9_]*'
   t.type = reserved.get( t.value, 'ID' )
+  return t
+
+def t_REAL_LITERAL( t ) :
+  r'((\d+\.\d*|\.\d+)([eE][+-]?\d+)?)|(\d+[eE][+-]?\d+)'
+  t.value = float( t.value )
   return t
 
 def t_INT_LITERAL( t ) :
@@ -98,10 +118,15 @@ start = 'program'
 # Precedence rules for the operators
 precedence = (
   ( 'right', 'EQUALS' ),
+  ( 'left',  'OR' ),
+  ( 'left',  'AND' ),
+  ( 'left',  'EQUAL_TO', 'NOT_EQUAL_TO' ),
+  ( 'left',  'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO' ),
   ( 'left',  'PLUS', 'MINUS' ),
-  ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),
+  ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),  
   ( 'right', 'EXPONENTIATION' ),
   ( 'right', 'UMINUS', 'UPLUS' ),
+  ( 'left',  'FACTORIAL' )
   )
 
 #-------------------
@@ -137,7 +162,10 @@ def p_statement_decl( p ) :
   'statement : type identifier init_opt'
   p[0] = Statement_Declaration( p.lineno( 1 ), p[1], p[2], p[3] )
 
-# TODO: 'type'
+def p_type( p ) :
+  '''type : INT
+          | REAL'''
+  p[0] = Type( p.lineno( 1 ), p[1] )
 
 def p_init_opt( p ) :
   '''init_opt : epsilon
@@ -191,7 +219,18 @@ def p_else_opt( p ) :
   else :
     p[0] = Statement_List( p.lineno( 2 ), p[2] )
 
-# TODO: Read statement
+def p_statement_read( p ) :
+  'statement : READ LPAREN identifier_list RPAREN'
+  p[0] = Statement_Read( p.lineno( 1 ), p[3] )
+
+def p_identifier_list_A( p ) :
+  'identifier_list : identifier_list COMMA identifier'
+  p[1].append( p[3] )
+  p[0] = p[1]
+
+def p_identifier_list_B( p ) :
+  'identifier_list : identifier'
+  p[0] = [ p[1] ]
 
 # While statement
 def p_statement_while( p ) :
@@ -199,6 +238,9 @@ def p_statement_while( p ) :
   p[0] = Statement_While( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ) )
 
 # TODO: Write statement
+def p_statement_write( p ) :
+  'statement : WRITE LPAREN expression_list RPAREN'
+  p[0] = Statement_Write( p.lineno( 1 ), p[3] )
 
 def p_expression_list_A( p ) :
   'expression_list : expression_list COMMA expression'
@@ -208,6 +250,10 @@ def p_expression_list_A( p ) :
 def p_expression_list_B( p ) :
   'expression_list : expression'
   p[0] = [ p[1] ]
+
+def p_expression_list_C( p ) :
+  'expression_list : epsilon'
+  p[0] = []
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :
@@ -229,7 +275,7 @@ def p_identifier( p ) :
 #-------------------
 # EXPRESSIONS ...
 
-# Binary operator expression
+# Binary operator expression - Left to Right
 def p_expression_binop( p ) :
   '''expression : expression PLUS     expression
                 | expression MINUS    expression
@@ -237,14 +283,27 @@ def p_expression_binop( p ) :
                 | expression DIVIDE   expression
                 | expression MODULUS  expression
                 | expression EXPONENTIATION expression
+                | expression AND      expression
+                | expression OR       expression
+                | expression EQUAL_TO expression
+                | expression NOT_EQUAL_TO expression
+                | expression GREATER_THAN expression
+                | expression GREATER_THAN_OR_EQUAL_TO expression
+                | expression LESS_THAN expression
+                | expression LESS_THAN_OR_EQUAL_TO expression
                 | identifier EQUALS   expression'''
   p[0] = BinaryOp( p.lineno( 2 ), p[2], p[1], p[3] )
 
-# Unary operator expression
-def p_expression_unop( p ) :
+# Unary operator expression - Right to Left
+def p_expression_unop_A( p ) :
   '''expression : MINUS expression %prec UMINUS
                 | PLUS  expression %prec UPLUS'''
   p[0] = UnaryOp( p.lineno( 1 ), p[1], p[2] )
+
+#                           - Left to Right
+def p_expression_unop_B( p ) :
+  'expression : expression FACTORIAL %prec FACTORIAL'
+  p[0] = UnaryOp( p.lineno( 1 ), p[2], p[1] )
 
 # Parenthesized expression
 def p_expression_group( p ) :
@@ -256,7 +315,10 @@ def p_expression_int_literal( p ) :
   'expression : INT_LITERAL'
   p[0] = Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'int' ), p[1] )
 
-# TODO: Real literal
+# Integer literal
+def p_expression_real_literal( p ) :
+  'expression : REAL_LITERAL'
+  p[0] = Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'real' ), p[1] )
 
 # Name
 def p_expression_id( p ) :
