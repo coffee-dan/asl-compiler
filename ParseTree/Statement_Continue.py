@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-10-10
+# Dalio, Brian A.
+# dalioba
+# 2019-10-06
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -11,7 +11,7 @@ class Statement_Continue() :
   def __init__( self, lineNum ) :
     self.m_NodeType = 'Statement_Continue'
 
-    self.m_LineNum  = lineNum
+    self.m_LineNum   = lineNum
 
   #---------------------------------------
   def dump( self, indent = 0, fp = sys.stdout ) :

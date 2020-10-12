@@ -1,5 +1,5 @@
 #-----------------------------------------------------------
-# ASL version 0
+# ASL version 1
 #-----------------------------------------------------------
 # Program
 
@@ -21,14 +21,35 @@
   continue
 
 #---------------------------------------
-# Statement:  Declaration
+# Statement:  Declaration (updated from v0)
 
-  int <identifier> [ = <expression> ]
+  <type> <identifier> [ = <expression> ]
 
 #---------------------------------------
 # Statement:  Expression
 
   <expression>
+
+  Operators from v0 :
+    =
+    +, -
+    *, /, %
+    ^
+    - (unary), + (unary)
+
+  Operators new in v1 :
+    logical    (binary, short-circuit) :  &&, ||
+    relational (binary)                :  ==, <>, <, <=, >, >=
+    factorial  (unary)                 :  !
+
+  Previously the only literal was INT_LITERAL, a string of decimal
+  digits.
+  We now also have REAL_LITERAL, a string of decimal digits which
+  includes a decimal point, '.', and optionally an exponent, the
+  letter 'e' or 'E' followed by an optional sign followed by a
+  string of decimal digits.
+
+  A REAL_LITERAL may omit the decimal point if it has an exponent.
 
 #---------------------------------------
 # Statement:  For
@@ -49,10 +70,26 @@
   end if
 
 #---------------------------------------
+# Statement: Read (new in v1)
+
+  read( <identifier> [ , <identifier> ]* )
+
+#---------------------------------------
 # Statement: While
 
   while <expression> do
     <statement_list>
   end while
+
+#---------------------------------------
+# Statement: Write (new in v1)
+
+  write( [ <expression> [ , <expression> ]* ]? )
+
+
+#---------------------------------------
+# Type (Scalar) (new in v1)
+
+  int | real
 
 #-----------------------------------------------------------

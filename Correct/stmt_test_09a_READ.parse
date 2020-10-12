@@ -1,0 +1,5 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (READ)
+(   7)       ID LIST [1]
+(   7)         IDENTIFIER 'a'

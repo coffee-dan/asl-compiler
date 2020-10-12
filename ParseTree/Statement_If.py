@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-10-10
+# Dalio, Brian A.
+# dalioba
+# 2019-09-29
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -24,11 +24,12 @@ class Statement_If() :
 
     self.m_TestExpr.dump( indent+1, fp = fp )
     self.m_ThenStmtList.dump( indent+1, fp = fp )
-    dumpHeaderLine( indent+1, 0, 
-      f'ELIF LIST [{len(self.m_ElifList)}]', fp )
-    for e in self.m_ElifList :
-      e[0].dump( indent+2, fp = fp )
-      e[1].dump( indent+2, fp = fp )
+
+    dumpHeaderLine( indent+1, 0, f'ELIF LIST [{len(self.m_ElifList)}]', fp )
+    for ( test, stmtList ) in self.m_ElifList :
+      test.dump( indent+2, fp = fp )
+      stmtList.dump( indent+2, fp = fp )
+
     self.m_ElseStmtList.dump( indent+1, fp = fp )
 
 #---------#---------#---------#---------#---------#--------#

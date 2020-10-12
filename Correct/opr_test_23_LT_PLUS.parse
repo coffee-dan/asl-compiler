@@ -1,0 +1,18 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [2]
+(   6)     STATEMENT (EXPRESSION)
+(   6)       BINARY_OP '<'
+(   6)         BINARY_OP '<'
+(   6)           IDENTIFIER 'a'
+(   6)           BINARY_OP '+'
+(   6)             IDENTIFIER 'b'
+(   6)             IDENTIFIER 'c'
+(   6)         IDENTIFIER 'd'
+(   7)     STATEMENT (EXPRESSION)
+(   7)       BINARY_OP '<'
+(   7)         BINARY_OP '+'
+(   7)           IDENTIFIER 'a'
+(   7)           IDENTIFIER 'b'
+(   7)         BINARY_OP '+'
+(   7)           IDENTIFIER 'c'
+(   7)           IDENTIFIER 'd'

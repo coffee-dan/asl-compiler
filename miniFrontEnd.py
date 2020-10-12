@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-10-10
+# Dalio, Brian A.
+# dalioba
+# 2019-10-18
 #---------#---------#---------#---------#---------#--------#
 import sys
 import traceback
@@ -18,22 +18,13 @@ from ParseTree          import *
 #---------#---------#---------#---------#---------#--------#
 # Lexical analysis section
 
-# Reserved words
-reserved = {
-	'break' : 'BREAK',
-	'continue' : 'CONTINUE',
-	'while' : 'WHILE',
-	'do' : 'DO',
-	'end' : 'END',
-	'for' : 'FOR',
-	'to' : 'TO',
-	'by' : 'BY',
-	'if' : 'IF',
-	'then' : 'THEN',
-	'elif' : 'ELIF',
-	'else' : 'ELSE',
-	'int' : 'INT'
- }
+reserved = { rw : rw.upper() for rw in (
+  'for', 'to', 'by', 'do', 'end',
+  'if', 'then', 'elif', 'else',
+  'while',
+  'break', 'continue',
+  'int',
+  ) }
 
 tokens = [
   'ID', 'INT_LITERAL',
@@ -42,11 +33,12 @@ tokens = [
   'MULTIPLY', 'DIVIDE', 'MODULUS',
   'EXPONENTIATION',
   'LPAREN', 'RPAREN', 'SEMICOLON',
-  'LBRACE', 'RBRACE'
+  'LBRACE', 'RBRACE',
   ] + list( reserved.values() )
 
 # Tokens
 
+t_COMMA     = r','
 t_DIVIDE    = r'/'
 t_EQUALS    = r'='
 t_EXPONENTIATION = r'\^'
@@ -62,7 +54,7 @@ t_SEMICOLON = r';'
 
 def t_ID( t ) :
   r'[a-zA-Z_][a-zA-Z0-9_]*'
-  t.type = reserved.get( t.value, 'ID' )    # Check for reserved words
+  t.type = reserved.get( t.value, 'ID' )
   return t
 
 def t_INT_LITERAL( t ) :
@@ -109,7 +101,7 @@ precedence = (
   ( 'left',  'PLUS', 'MINUS' ),
   ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),
   ( 'right', 'EXPONENTIATION' ),
-  ( 'right', 'UMINUS', 'UPLUS' )
+  ( 'right', 'UMINUS', 'UPLUS' ),
   )
 
 #-------------------
@@ -132,22 +124,29 @@ def p_semicolon_opt( p ) :
 
 # Break statement
 def p_statement_break( p ) :
-	'statement : BREAK'
-	p[0] = Statement_Break( p.lineno( 1 ) )
+  'statement : BREAK'
+  p[0] = Statement_Break( p.lineno( 1 ) )
 
 # Continue statement
 def p_statement_continue( p ) :
-	'statement : CONTINUE'
-	p[0] = Statement_Continue( p.lineno( 1 ) )
+  'statement : CONTINUE'
+  p[0] = Statement_Continue( p.lineno( 1 ) )
 
-# Declaration statement
-def p_statement_declaration_A( p ) :
-	'statement : INT ID'
-	p[0] = Statement_Declaration( p.lineno( 0 ), Type( p.lineno( 1 ), p[1] ), Identifier( p.lineno( 2 ), p[2] ), Literal( 0, 'int', 0 ) )
+# Declaration
+def p_statement_decl( p ) :
+  'statement : type identifier init_opt'
+  p[0] = Statement_Declaration( p.lineno( 1 ), p[1], p[2], p[3] )
 
-def p_statement_declaration_B( p ) :
-	'statement : INT ID EQUALS expression'
-	p[0] = Statement_Declaration( p.lineno( 0 ), Type( p.lineno( 1 ), p[1] ), Identifier( p.lineno( 2 ), p[2] ), p[4] )
+# TODO: 'type'
+
+def p_init_opt( p ) :
+  '''init_opt : epsilon
+              | EQUALS expression'''
+  if p[1] is None :
+    p[0] = Literal( 0, Type( 0, 'int' ), 0 )
+
+  else :
+    p[0] = p[2]
 
 # Expression statement
 def p_statement_expr( p ) :
@@ -155,41 +154,60 @@ def p_statement_expr( p ) :
   p[0] = Statement_Expression( p.lineno( 1 ), p[1] )
 
 # For statement
-def p_statement_for_A( p ) :
-	'statement : FOR ID EQUALS expression TO expression DO statement_list semicolon_opt END FOR'
-	p[0] = Statement_For( p.lineno( 1 ), Identifier( p.lineno( 2 ), p[2] ), p[4], p[6], Literal( 0, 'int', 1 ), Statement_List( p.lineno( 8 ), p[8] ) )
+def p_statement_for( p ) :
+  'statement : FOR identifier EQUALS expression TO expression step_opt DO statement_list semicolon_opt END FOR'
+  p[0] = Statement_For( p.lineno( 1 ), p[2], p[4], p[6], p[7], Statement_List( p.lineno( 9 ), p[9] ) )
 
-def p_statement_for_B( p ) :
-	'statement : FOR ID EQUALS expression TO expression BY expression DO statement_list semicolon_opt END FOR'
-	p[0] = Statement_For( p.lineno( 1 ), Identifier( p.lineno( 2 ), p[2] ), p[4], p[6], p[8], Statement_List( p.lineno( 10 ), p[10] ) )
+def p_step_opt( p ) :
+  '''step_opt : epsilon
+              | BY expression'''
+  if p[1] == None :
+    p[0] = Literal( 0, Type( 0, 'int' ), 1 )
+
+  else :
+    p[0] = p[2]
 
 # If statement
 def p_statement_if( p ) :
-	'statement : IF expression THEN statement_list semicolon_opt elif_list else_opt END IF'
-	thenStmtList = Statement_List( p.lineno( 4 ), p[4] )
-	p[0] = Statement_If( p.lineno( 1 ), p[2], thenStmtList, p[6], p[7] )
+  'statement : IF expression THEN statement_list semicolon_opt elif_opt else_opt END IF'
+  p[0] = Statement_If( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ), p[6], p[7] )
 
-def p_elif_list( p ) :
-	'''elif_list : epsilon
-							 | elif_list ELIF expression THEN statement_list semicolon_opt'''
-	if p[1] is None :
-		p[0] = []
-	else :
-		p[1].append( ( p[3], Statement_List( p.lineno( 5 ), p[5] ) ) )
-		p[0] = p[1]
+def p_elif_opt( p ) :
+  '''elif_opt : epsilon
+              | elif_opt ELIF expression THEN statement_list semicolon_opt'''
+  if p[1] is None :
+    p[0] = []
+
+  else :
+    p[1].append( ( p[3], Statement_List( p.lineno( 5 ), p[5] ) ) )
+    p[0] = p[1]
 
 def p_else_opt( p ) :
-	'''else_opt : epsilon
-					  	| ELSE statement_list semicolon_opt'''
-	if p[1] is None :
-		p[0] = Statement_List( 0, [] )
-	else :
-		p[0] = Statement_List( p.lineno( 2 ), p[2] )
+  '''else_opt : epsilon
+              | ELSE statement_list semicolon_opt'''
+  if p[1] is None :
+    p[0] = Statement_List( 0, [] )
+
+  else :
+    p[0] = Statement_List( p.lineno( 2 ), p[2] )
+
+# TODO: Read statement
 
 # While statement
 def p_statement_while( p ) :
-	'statement : WHILE expression DO statement_list semicolon_opt END WHILE'
-	p[0] = Statement_While( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ) )
+  'statement : WHILE expression DO statement_list semicolon_opt END WHILE'
+  p[0] = Statement_While( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ) )
+
+# TODO: Write statement
+
+def p_expression_list_A( p ) :
+  'expression_list : expression_list COMMA expression'
+  p[1].append( p[3] )
+  p[0] = p[1]
+
+def p_expression_list_B( p ) :
+  'expression_list : expression'
+  p[0] = [ p[1] ]
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :
@@ -236,7 +254,9 @@ def p_expression_group( p ) :
 # Integer literal
 def p_expression_int_literal( p ) :
   'expression : INT_LITERAL'
-  p[0] = Literal( p.lineno( 1 ), 'int', p[1] )
+  p[0] = Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'int' ), p[1] )
+
+# TODO: Real literal
 
 # Name
 def p_expression_id( p ) :

@@ -1,0 +1,140 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [4]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'b'
+(   7)       BINARY_OP '^'
+(   7)         IDENTIFIER 'a'
+(   7)         LITERAL 'int' 16
+(   8)     STATEMENT (DECLARATION)
+(   8)       TYPE ('int')
+(   8)       IDENTIFIER 'c'
+(   8)       BINARY_OP '*'
+(   8)         IDENTIFIER 'b'
+(   8)         LITERAL 'int' 3
+(  10)     STATEMENT (FOR)
+(  10)       IDENTIFIER 'i'
+(  10)       BINARY_OP '+'
+(  10)         IDENTIFIER 'a'
+(  10)         IDENTIFIER 'b'
+(  10)       BINARY_OP '%'
+(  10)         IDENTIFIER 'b'
+(  10)         IDENTIFIER 'a'
+(  10)       BINARY_OP '-'
+(  10)         IDENTIFIER 'a'
+(  10)         IDENTIFIER 'b'
+(  11)       STATEMENT LIST [1]
+(  11)         STATEMENT (FOR)
+(  11)           IDENTIFIER 'j'
+(  11)           LITERAL 'int' 1
+(  11)           LITERAL 'int' 10
+(   0)           LITERAL 'int' 1
+(  12)           STATEMENT LIST [4]
+(  12)             STATEMENT (FOR)
+(  12)               IDENTIFIER 'k'
+(  12)               IDENTIFIER 'c'
+(  12)               IDENTIFIER 'a'
+(  12)               LITERAL 'int' 3
+(  13)               STATEMENT LIST [1]
+(  13)                 STATEMENT (EXPRESSION)
+(  13)                   BINARY_OP '='
+(  13)                     IDENTIFIER 'c'
+(  13)                     BINARY_OP '*'
+(  13)                       IDENTIFIER 'a'
+(  13)                       IDENTIFIER 'b'
+(  16)             STATEMENT (WHILE)
+(  16)               IDENTIFIER 'a'
+(  17)               STATEMENT LIST [2]
+(  17)                 STATEMENT (IF)
+(  17)                   BINARY_OP '-'
+(  17)                     IDENTIFIER 'a'
+(  17)                     LITERAL 'int' 10
+(  18)                   STATEMENT LIST [1]
+(  18)                     STATEMENT (EXPRESSION)
+(  18)                       BINARY_OP '='
+(  18)                         IDENTIFIER 'a'
+(  18)                         LITERAL 'int' 37
+(   0)                   ELIF LIST [4]
+(  20)                     BINARY_OP '+'
+(  20)                       IDENTIFIER 'a'
+(  20)                       LITERAL 'int' 13
+(  21)                     STATEMENT LIST [2]
+(  21)                       STATEMENT (EXPRESSION)
+(  21)                         BINARY_OP '='
+(  21)                           IDENTIFIER 'a'
+(  21)                           LITERAL 'int' 43
+(  22)                       STATEMENT (EXPRESSION)
+(  22)                         BINARY_OP '='
+(  22)                           IDENTIFIER 'c'
+(  22)                           IDENTIFIER 'b'
+(  24)                     BINARY_OP '-'
+(  24)                       IDENTIFIER 'c'
+(  24)                       LITERAL 'int' 19
+(  25)                     STATEMENT LIST [2]
+(  25)                       STATEMENT (EXPRESSION)
+(  25)                         BINARY_OP '='
+(  25)                           IDENTIFIER 'c'
+(  25)                           LITERAL 'int' 18
+(  26)                       STATEMENT (EXPRESSION)
+(  26)                         BINARY_OP '='
+(  26)                           IDENTIFIER 'b'
+(  26)                           BINARY_OP '/'
+(  26)                             IDENTIFIER 'a'
+(  26)                             IDENTIFIER 'c'
+(  28)                     IDENTIFIER 'b'
+(  29)                     STATEMENT LIST [1]
+(  29)                       STATEMENT (BREAK)
+(  31)                     IDENTIFIER 'c'
+(  32)                     STATEMENT LIST [1]
+(  32)                       STATEMENT (CONTINUE)
+(  35)                   STATEMENT LIST [1]
+(  35)                     STATEMENT (EXPRESSION)
+(  35)                       BINARY_OP '='
+(  35)                         IDENTIFIER 'a'
+(  35)                         LITERAL 'int' 4
+(  38)                 STATEMENT (EXPRESSION)
+(  38)                   BINARY_OP '='
+(  38)                     IDENTIFIER 'a'
+(  38)                     BINARY_OP '-'
+(  38)                       IDENTIFIER 'a'
+(  38)                       LITERAL 'int' 1
+(  41)             STATEMENT (WHILE)
+(  41)               BINARY_OP '+'
+(  41)                 IDENTIFIER 'b'
+(  41)                 LITERAL 'int' 17
+(  42)               STATEMENT LIST [2]
+(  42)                 STATEMENT (EXPRESSION)
+(  42)                   BINARY_OP '='
+(  42)                     IDENTIFIER 'a'
+(  42)                     BINARY_OP '-'
+(  42)                       IDENTIFIER 'a'
+(  42)                       IDENTIFIER 'b'
+(  43)                 STATEMENT (EXPRESSION)
+(  43)                   BINARY_OP '='
+(  43)                     IDENTIFIER 'b'
+(  43)                     BINARY_OP '-'
+(  43)                       IDENTIFIER 'b'
+(  43)                       IDENTIFIER 'c'
+(  46)             STATEMENT (IF)
+(  46)               BINARY_OP '+'
+(  46)                 IDENTIFIER 'c'
+(  46)                 LITERAL 'int' 16
+(  47)               STATEMENT LIST [1]
+(  47)                 STATEMENT (EXPRESSION)
+(  47)                   BINARY_OP '='
+(  47)                     IDENTIFIER 'b'
+(  47)                     BINARY_OP '-'
+(  47)                       IDENTIFIER 'a'
+(  47)                       IDENTIFIER 'c'
+(   0)               ELIF LIST [0]
+(  49)               STATEMENT LIST [1]
+(  49)                 STATEMENT (EXPRESSION)
+(  49)                   BINARY_OP '='
+(  49)                     IDENTIFIER 'c'
+(  49)                     BINARY_OP '+'
+(  49)                       IDENTIFIER 'b'
+(  49)                       IDENTIFIER 'a'

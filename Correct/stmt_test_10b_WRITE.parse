@@ -1,0 +1,12 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [2]
+(   7)     STATEMENT (WRITE)
+(   7)       EXPR LIST [1]
+(   7)         IDENTIFIER 'a'
+(   8)     STATEMENT (WRITE)
+(   8)       EXPR LIST [1]
+(   8)         BINARY_OP '+'
+(   8)           IDENTIFIER 'a'
+(   8)           BINARY_OP '/'
+(   8)             IDENTIFIER 'b'
+(   8)             IDENTIFIER 'c'

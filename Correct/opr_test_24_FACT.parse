@@ -1,0 +1,5 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   6)     STATEMENT (EXPRESSION)
+(   6)       UNARY_OP '!'
+(   6)         IDENTIFIER 'a'

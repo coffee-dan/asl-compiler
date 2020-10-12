@@ -1,38 +1,44 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [5]
+(   5)   STATEMENT LIST [7]
 (   7)     STATEMENT (DECLARATION)
 (   7)       TYPE ('int')
 (   7)       IDENTIFIER 'n'
-(   7)       LITERAL 'int' 10
-(  10)     STATEMENT (DECLARATION)
-(  10)       TYPE ('int')
-(  10)       IDENTIFIER 'previous'
-(  10)       LITERAL 'int' 0
+(   0)       LITERAL 'int' 0
+(   8)     STATEMENT (READ)
+(   8)       ID LIST [1]
+(   8)         IDENTIFIER 'n'
 (  11)     STATEMENT (DECLARATION)
 (  11)       TYPE ('int')
-(  11)       IDENTIFIER 'current'
-(  11)       LITERAL 'int' 1
+(  11)       IDENTIFIER 'previous'
+(  11)       LITERAL 'int' 0
 (  12)     STATEMENT (DECLARATION)
 (  12)       TYPE ('int')
-(  12)       IDENTIFIER 'next'
+(  12)       IDENTIFIER 'current'
+(  12)       LITERAL 'int' 1
+(  13)     STATEMENT (DECLARATION)
+(  13)       TYPE ('int')
+(  13)       IDENTIFIER 'next'
 (   0)       LITERAL 'int' 0
-(  16)     STATEMENT (FOR)
-(  16)       IDENTIFIER 'i'
-(  16)       LITERAL 'int' 2
-(  16)       IDENTIFIER 'n'
+(  17)     STATEMENT (FOR)
+(  17)       IDENTIFIER 'i'
+(  17)       LITERAL 'int' 2
+(  17)       IDENTIFIER 'n'
 (   0)       LITERAL 'int' 1
-(  18)       STATEMENT LIST [3]
-(  18)         STATEMENT (EXPRESSION)
-(  18)           BINARY_OP '='
-(  18)             IDENTIFIER 'next'
-(  18)             BINARY_OP '+'
-(  18)               IDENTIFIER 'previous'
-(  18)               IDENTIFIER 'current'
-(  22)         STATEMENT (EXPRESSION)
-(  22)           BINARY_OP '='
-(  22)             IDENTIFIER 'previous'
-(  22)             IDENTIFIER 'current'
+(  19)       STATEMENT LIST [3]
+(  19)         STATEMENT (EXPRESSION)
+(  19)           BINARY_OP '='
+(  19)             IDENTIFIER 'next'
+(  19)             BINARY_OP '+'
+(  19)               IDENTIFIER 'previous'
+(  19)               IDENTIFIER 'current'
 (  23)         STATEMENT (EXPRESSION)
 (  23)           BINARY_OP '='
+(  23)             IDENTIFIER 'previous'
 (  23)             IDENTIFIER 'current'
-(  23)             IDENTIFIER 'next'
+(  24)         STATEMENT (EXPRESSION)
+(  24)           BINARY_OP '='
+(  24)             IDENTIFIER 'current'
+(  24)             IDENTIFIER 'next'
+(  28)     STATEMENT (WRITE)
+(  28)       EXPR LIST [1]
+(  28)         IDENTIFIER 'current'

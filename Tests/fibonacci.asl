@@ -1,10 +1,11 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-10-18
 
 {
   // Compute this fibonacci number.
-  int n = 10;
+  int n;
+  read( n );
 
   // Some temporaries.
   int previous = 0;       // Fibonacci(0) = 0
@@ -24,4 +25,5 @@
   end for;
 
   // At this point, current is Fibonacci(n).
+  write( current );
 }
