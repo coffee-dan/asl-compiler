@@ -1,24 +1,25 @@
 # Dalio, Brian A.
 # dalioba
-# 2019-02-27
+# 2019-10-31
 #---------#---------#---------#---------#---------#--------#
 import sys
 
 from .common       import *
 
 #---------#---------#---------#---------#---------#--------#
-class Statement_Expression() :
-  def __init__( self, lineNum, expr ) :
-    self.m_NodeType = 'Statement_Expression'
+class Expression_UnaryOp() :
+  def __init__( self, lineNum, op, right ) :
+    self.m_NodeType = 'UnaryOp'
 
     self.m_LineNum  = lineNum
-    self.m_Expr     = expr
+    self.m_Op       = op
+    self.m_Right    = right
 
   #---------------------------------------
   def dump( self, indent = 0, fp = sys.stdout ) :
     dumpHeaderLine( indent, self.m_LineNum,
-      'STATEMENT (EXPRESSION)', fp )
+      f'UNARY_OP {self.m_Op!r}', fp )
 
-    self.m_Expr.dump( indent+1, fp = fp )
+    self.m_Right.dump( indent+1, fp = fp )
 
 #---------#---------#---------#---------#---------#--------#

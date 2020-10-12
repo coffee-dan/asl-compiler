@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-10-19
+# Dalio, Brian A.
+# dalioba
+# 2019-10-18
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -19,8 +19,10 @@ class Statement_Write() :
     dumpHeaderLine( indent, self.m_LineNum,
       'STATEMENT (WRITE)', fp )
 
-    dumpHeaderLine( indent+1, self.m_LineNum, f'EXPR LIST [{len(self.m_ExprList)}]', fp )
-    for expr in self.m_ExprList :
-      expr.dump( indent+2, fp = fp )
+    dumpHeaderLine( indent+1, self.m_LineNum,
+      f'EXPR LIST [{len(self.m_ExprList)}]', fp )
+
+    for e in self.m_ExprList :
+      e.dump( indent+2, fp = fp )
 
 #---------#---------#---------#---------#---------#--------#

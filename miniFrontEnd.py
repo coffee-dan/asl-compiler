@@ -1,7 +1,8 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-10-19
+# Dalio, Brian A.
+# dalioba
+# 2019-10-31
 #---------#---------#---------#---------#---------#--------#
+import logging
 import sys
 import traceback
 
@@ -23,45 +24,46 @@ reserved = { rw : rw.upper() for rw in (
   'if', 'then', 'elif', 'else',
   'while',
   'break', 'continue',
+
+  'read', 'write',
+
   'int', 'real',
-  'read', 'write'
   ) }
 
 tokens = [
   'ID', 'INT_LITERAL', 'REAL_LITERAL',
-  'EQUALS',
+  'ASSIGN',
   'PLUS', 'MINUS',
   'MULTIPLY', 'DIVIDE', 'MODULUS',
   'EXPONENTIATION',
-  'FACTORIAL',
-  'AND', 'OR',
-  'EQUAL_TO', 'NOT_EQUAL_TO',
-  'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO',
-  'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO',
-  'LPAREN', 'RPAREN', 'SEMICOLON',
+  'LPAREN', 'RPAREN', 'SEMICOLON', 'COMMA',
   'LBRACE', 'RBRACE',
-  'COMMA'
+  'AND', 'OR',
+  'EQ', 'NE', 'LT', 'LE', 'GT', 'GE',
+  'FACTORIAL',
   ] + list( reserved.values() )
 
 # Tokens
+
 t_AND       = r'&&'
-t_COMMA     = r','
-t_EQUAL_TO   = r'=='
-t_DIVIDE    = r'/'
-t_EQUALS    = r'='
-t_EXPONENTIATION = r'\^'
+t_OR        = r'\|\|'
+t_EQ        = r'=='
+t_NE        = r'<>'
+t_LT        = r'<'
+t_LE        = r'<='
+t_GT        = r'>'
+t_GE        = r'>='
 t_FACTORIAL = r'!'
-t_GREATER_THAN = r'>'
-t_GREATER_THAN_OR_EQUAL_TO = r'>='
-t_LESS_THAN = r'<'
-t_LESS_THAN_OR_EQUAL_TO = r'<='
+
+t_ASSIGN    = r'='
+t_COMMA     = r','
+t_DIVIDE    = r'/'
+t_EXPONENTIATION = r'\^'
 t_LBRACE    = r'{'
 t_LPAREN    = r'\('
 t_MINUS     = r'-'
 t_MODULUS   = r'%'
 t_MULTIPLY  = r'\*'
-t_NOT_EQUAL_TO = r'<>'
-t_OR        = r'\|\|'
 t_PLUS      = r'\+'
 t_RBRACE    = r'}'
 t_RPAREN    = r'\)'
@@ -73,7 +75,7 @@ def t_ID( t ) :
   return t
 
 def t_REAL_LITERAL( t ) :
-  r'((\d+\.\d*|\.\d+)([eE][+-]?\d+)?)|(\d+[eE][+-]?\d+)'
+  r'((\d*(\d\.|\.\d)\d*)([eE][-+]?\d+)?)|(\d+([eE][-+]?\d+))'
   t.value = float( t.value )
   return t
 
@@ -81,6 +83,12 @@ def t_INT_LITERAL( t ) :
   r'\d+'
   t.value = int( t.value )
   return t
+
+# TODO: Add t_STRING_LITERAL( t ) here.
+#       Ensure that you deal with empty strings and strings
+#       that use the escape sequences \", \\, \a, \b, \e, \f, \n,
+#       \r, \t, and \v.  Note that Python does not support all
+#       these escapes so you'll have to hand-code some of them.
 
 #-------------------
 # Ignored characters
@@ -117,16 +125,16 @@ start = 'program'
 #-------------------
 # Precedence rules for the operators
 precedence = (
-  ( 'right', 'EQUALS' ),
+  ( 'right', 'ASSIGN' ),
   ( 'left',  'OR' ),
   ( 'left',  'AND' ),
-  ( 'left',  'EQUAL_TO', 'NOT_EQUAL_TO' ),
-  ( 'left',  'GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO' ),
+  ( 'left',  'EQ', 'NE' ),
+  ( 'left',  'LT', 'LE', 'GT', 'GE' ),
   ( 'left',  'PLUS', 'MINUS' ),
-  ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),  
+  ( 'left',  'MULTIPLY', 'DIVIDE', 'MODULUS' ),
   ( 'right', 'EXPONENTIATION' ),
   ( 'right', 'UMINUS', 'UPLUS' ),
-  ( 'left',  'FACTORIAL' )
+  ( 'left',  'FACTORIAL' ),
   )
 
 #-------------------
@@ -169,9 +177,9 @@ def p_type( p ) :
 
 def p_init_opt( p ) :
   '''init_opt : epsilon
-              | EQUALS expression'''
+              | ASSIGN expression'''
   if p[1] is None :
-    p[0] = Literal( 0, Type( 0, 'int' ), 0 )
+    p[0] = Expression_Literal( 0, Type( 0, 'int' ), 0 )
 
   else :
     p[0] = p[2]
@@ -183,14 +191,14 @@ def p_statement_expr( p ) :
 
 # For statement
 def p_statement_for( p ) :
-  'statement : FOR identifier EQUALS expression TO expression step_opt DO statement_list semicolon_opt END FOR'
+  'statement : FOR identifier ASSIGN expression TO expression step_opt DO statement_list semicolon_opt END FOR'
   p[0] = Statement_For( p.lineno( 1 ), p[2], p[4], p[6], p[7], Statement_List( p.lineno( 9 ), p[9] ) )
 
 def p_step_opt( p ) :
   '''step_opt : epsilon
               | BY expression'''
   if p[1] == None :
-    p[0] = Literal( 0, Type( 0, 'int' ), 1 )
+    p[0] = Expression_Literal( 0, Type( 0, 'int' ), 1 )
 
   else :
     p[0] = p[2]
@@ -219,28 +227,39 @@ def p_else_opt( p ) :
   else :
     p[0] = Statement_List( p.lineno( 2 ), p[2] )
 
+# Read statement
 def p_statement_read( p ) :
-  'statement : READ LPAREN identifier_list RPAREN'
+  'statement : READ LPAREN id_list RPAREN'
   p[0] = Statement_Read( p.lineno( 1 ), p[3] )
 
-def p_identifier_list_A( p ) :
-  'identifier_list : identifier_list COMMA identifier'
-  p[1].append( p[3] )
-  p[0] = p[1]
+def p_id_list( p ) :
+  '''id_list : id_list COMMA identifier
+             | identifier'''
+  if isinstance( p[1], list ) :
+    p[1].append( p[3] )
+    p[0] = p[1]
 
-def p_identifier_list_B( p ) :
-  'identifier_list : identifier'
-  p[0] = [ p[1] ]
+  else :
+    p[0] = [ p[1] ]
 
 # While statement
 def p_statement_while( p ) :
   'statement : WHILE expression DO statement_list semicolon_opt END WHILE'
   p[0] = Statement_While( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ) )
 
-# TODO: Write statement
+# Write statement
 def p_statement_write( p ) :
-  'statement : WRITE LPAREN expression_list RPAREN'
+  'statement : WRITE LPAREN expression_list_opt RPAREN'
   p[0] = Statement_Write( p.lineno( 1 ), p[3] )
+
+def p_expression_list_opt( p ) :
+  '''expression_list_opt : epsilon
+                         | expression_list'''
+  if p[1] is None :
+    p[0] = []
+
+  else :
+    p[0] = p[1]
 
 def p_expression_list_A( p ) :
   'expression_list : expression_list COMMA expression'
@@ -250,10 +269,6 @@ def p_expression_list_A( p ) :
 def p_expression_list_B( p ) :
   'expression_list : expression'
   p[0] = [ p[1] ]
-
-def p_expression_list_C( p ) :
-  'expression_list : epsilon'
-  p[0] = []
 
 # List of statements separated by semicolons
 def p_statement_list_A( p ) :
@@ -270,12 +285,12 @@ def p_statement_list_B( p ) :
 
 def p_identifier( p ) :
   'identifier : ID'
-  p[0] = Identifier( p.lineno( 1 ), p[1] )
+  p[0] = Expression_Identifier( p.lineno( 1 ), p[1] )
 
 #-------------------
 # EXPRESSIONS ...
 
-# Binary operator expression - Left to Right
+# Binary operator expression
 def p_expression_binop( p ) :
   '''expression : expression PLUS     expression
                 | expression MINUS    expression
@@ -283,27 +298,29 @@ def p_expression_binop( p ) :
                 | expression DIVIDE   expression
                 | expression MODULUS  expression
                 | expression EXPONENTIATION expression
+                | expression EQ       expression
+                | expression NE       expression
+                | expression LT       expression
+                | expression LE       expression
+                | expression GT       expression
+                | expression GE       expression
                 | expression AND      expression
                 | expression OR       expression
-                | expression EQUAL_TO expression
-                | expression NOT_EQUAL_TO expression
-                | expression GREATER_THAN expression
-                | expression GREATER_THAN_OR_EQUAL_TO expression
-                | expression LESS_THAN expression
-                | expression LESS_THAN_OR_EQUAL_TO expression
-                | identifier EQUALS   expression'''
-  p[0] = BinaryOp( p.lineno( 2 ), p[2], p[1], p[3] )
+                | identifier ASSIGN   expression'''
+  p[0] = Expression_BinaryOp( p.lineno( 2 ), p[2], p[1], p[3] )
 
-# Unary operator expression - Right to Left
-def p_expression_unop_A( p ) :
-  '''expression : MINUS expression %prec UMINUS
+# Unary operator expression
+def p_expression_unop( p ) :
+  '''expression : expression FACTORIAL
+                | MINUS expression %prec UMINUS
                 | PLUS  expression %prec UPLUS'''
-  p[0] = UnaryOp( p.lineno( 1 ), p[1], p[2] )
+  if isinstance( p[1], str ) :
+    # It's a prefix operator
+    p[0] = Expression_UnaryOp( p.lineno( 1 ), p[1], p[2] )
 
-#                           - Left to Right
-def p_expression_unop_B( p ) :
-  'expression : expression FACTORIAL %prec FACTORIAL'
-  p[0] = UnaryOp( p.lineno( 1 ), p[2], p[1] )
+  else :
+    # It's a postfix operator
+    p[0] = Expression_UnaryOp( p.lineno( 2 ), p[2], p[1] )
 
 # Parenthesized expression
 def p_expression_group( p ) :
@@ -313,12 +330,18 @@ def p_expression_group( p ) :
 # Integer literal
 def p_expression_int_literal( p ) :
   'expression : INT_LITERAL'
-  p[0] = Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'int' ), p[1] )
+  p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'int' ), p[1] )
 
-# Integer literal
+# Real literal
 def p_expression_real_literal( p ) :
   'expression : REAL_LITERAL'
-  p[0] = Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'real' ), p[1] )
+  p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'real' ), p[1] )
+
+# String literal
+# TODO: Put p_expression_string_literal( p ) here.
+#       Use 'string' as the name of the type. (Look at the
+#       INT_LITERAL and REAL_LITERAL cases for examples of what
+#       this should look like.
 
 # Name
 def p_expression_id( p ) :
@@ -353,6 +376,16 @@ def p_error( p ) :
 
 #---------#---------#---------#---------#---------#--------#
 def _main( inputFileName ) :
+  debug = True
+  logging.basicConfig(
+    level = logging.DEBUG,
+    filename = 'parselog.txt',
+    filemode = 'w',
+    format = '%(filename)10s:%(lineno)4d:%(message)s'
+  )
+
+  log = logging.getLogger()
+
   begin = time()
 
   fileName  = str( Path( inputFileName ).name )
@@ -368,9 +401,9 @@ def _main( inputFileName ) :
     print( f'    Read succeeded.  ({time()-strt:.3f}s)\n* Beginning parse ...' )
 
     strt    = time()
-    lexer   = ply.lex.lex()
-    parser  = ply.yacc.yacc()
-    program = parser.parse( data, tracking = True )
+    lexer   = ply.lex.lex( debug = debug, debuglog = log )
+    parser  = ply.yacc.yacc( debug = debug, debuglog = log )
+    program = parser.parse( data, tracking = True, debug = log )
 
     print( f'    Parse succeeded.  ({time()-strt:.3f}s)\n* Beginning parse dump to {parseFile!r} ...' )
 
