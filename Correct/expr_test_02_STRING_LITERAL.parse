@@ -1,0 +1,14 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [6]
+(   7)     STATEMENT (EXPRESSION)
+(   7)       LITERAL 'string' ''
+(  10)     STATEMENT (EXPRESSION)
+(  10)       LITERAL 'string' '"'
+(  13)     STATEMENT (EXPRESSION)
+(  13)       LITERAL 'string' '\\'
+(  17)     STATEMENT (EXPRESSION)
+(  17)       LITERAL 'string' '\x07\x08\x1b\x0c\n\r\t\x0b'
+(  20)     STATEMENT (EXPRESSION)
+(  20)       LITERAL 'string' 'az\x07yb\x08xc\x1bwd\x0cve\nuf\rtg\tsh\x0bri'
+(  23)     STATEMENT (EXPRESSION)
+(  23)       LITERAL 'string' "Hi, there.  I'm a string literal."

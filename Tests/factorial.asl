@@ -1,10 +1,12 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-18
+// 2019-10-31
 
 {
   // Compute factorial of this number.
   int n;
+
+  write( "Enter n:" );
   read( n );
 
   // Resulting value.
@@ -16,5 +18,5 @@
   end for;
 
   // At this point, fact is n!.
-  write( fact );
+  write( n, "! = ", fact );
 }

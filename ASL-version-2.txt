@@ -1,5 +1,5 @@
 #-----------------------------------------------------------
-# ASL version 1
+# ASL version 2
 #-----------------------------------------------------------
 # Program
 
@@ -21,7 +21,7 @@
   continue
 
 #---------------------------------------
-# Statement:  Declaration (updated from v0)
+# Statement:  Declaration
 
   <type> <identifier> [ = <expression> ]
 
@@ -30,26 +30,42 @@
 
   <expression>
 
-  Operators from v0 :
+  === Operators ===
+
     =
+    ||
+    &&
+    ==, <>
+    <, <=, >, >=
     +, -
     *, /, %
     ^
     - (unary), + (unary)
+    ! (unary)
 
-  Operators new in v1 :
-    logical    (binary, short-circuit) :  &&, ||
-    relational (binary)                :  ==, <>, <, <=, >, >=
-    factorial  (unary)                 :  !
+  === Literals ===
 
-  Previously the only literal was INT_LITERAL, a string of decimal
-  digits.
-  We now also have REAL_LITERAL, a string of decimal digits which
-  includes a decimal point, '.', and optionally an exponent, the
-  letter 'e' or 'E' followed by an optional sign followed by a
-  string of decimal digits.
+    INT_LITERAL     a sequnce of decimal digits.
 
-  A REAL_LITERAL may omit the decimal point if it has an exponent.
+    REAL_LITERAL    a sequence of decimal digits including a
+      decimal point '.' and optionally an exponent, which is the
+      letter 'e' or 'E' optionally followed by a sign ('+' or
+      '-') followed by a sequence of decimal digits.
+
+      If the exponent is given, the decimal point may be omitted.
+
+    STRING_LITERAL  any characters except " and \n within
+      quotation marks (").  The following escapes are permitted:
+        \"  a " character
+        \\  a \ character
+        \a  Alert            -> character  7 (decimal)
+        \b  Backspace        -> character  8 (decimal)
+        \e  Escape           -> character 27 (decimal)
+        \f  Formfeed         -> character 12 (decimal)
+        \n  Newline          -> character 10 (decimal)
+        \r  Carriagee Return -> character 13 (decimal)
+        \t  Horizontal Tab   -> character  9 (decimal)
+        \v  Vertical Tab     -> character 11 (decimal)
 
 #---------------------------------------
 # Statement:  For
@@ -70,7 +86,7 @@
   end if
 
 #---------------------------------------
-# Statement: Read (new in v1)
+# Statement: Read
 
   read( <identifier> [ , <identifier> ]* )
 
@@ -82,13 +98,13 @@
   end while
 
 #---------------------------------------
-# Statement: Write (new in v1)
+# Statement: Write
 
   write( [ <expression> [ , <expression> ]* ]? )
 
 
 #---------------------------------------
-# Type (Scalar) (new in v1)
+# Type (Scalar)
 
   int | real
 

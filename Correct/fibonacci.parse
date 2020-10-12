@@ -1,44 +1,50 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [7]
+(   5)   STATEMENT LIST [8]
 (   7)     STATEMENT (DECLARATION)
 (   7)       TYPE ('int')
 (   7)       IDENTIFIER 'n'
 (   0)       LITERAL 'int' 0
-(   8)     STATEMENT (READ)
-(   8)       ID LIST [1]
-(   8)         IDENTIFIER 'n'
-(  11)     STATEMENT (DECLARATION)
-(  11)       TYPE ('int')
-(  11)       IDENTIFIER 'previous'
-(  11)       LITERAL 'int' 0
-(  12)     STATEMENT (DECLARATION)
-(  12)       TYPE ('int')
-(  12)       IDENTIFIER 'current'
-(  12)       LITERAL 'int' 1
+(   9)     STATEMENT (WRITE)
+(   9)       EXPR LIST [1]
+(   9)         LITERAL 'string' 'Enter n:'
+(  10)     STATEMENT (READ)
+(  10)       ID LIST [1]
+(  10)         IDENTIFIER 'n'
 (  13)     STATEMENT (DECLARATION)
 (  13)       TYPE ('int')
-(  13)       IDENTIFIER 'next'
+(  13)       IDENTIFIER 'previous'
+(  13)       LITERAL 'int' 0
+(  14)     STATEMENT (DECLARATION)
+(  14)       TYPE ('int')
+(  14)       IDENTIFIER 'current'
+(  14)       LITERAL 'int' 1
+(  15)     STATEMENT (DECLARATION)
+(  15)       TYPE ('int')
+(  15)       IDENTIFIER 'next'
 (   0)       LITERAL 'int' 0
-(  17)     STATEMENT (FOR)
-(  17)       IDENTIFIER 'i'
-(  17)       LITERAL 'int' 2
-(  17)       IDENTIFIER 'n'
+(  19)     STATEMENT (FOR)
+(  19)       IDENTIFIER 'i'
+(  19)       LITERAL 'int' 2
+(  19)       IDENTIFIER 'n'
 (   0)       LITERAL 'int' 1
-(  19)       STATEMENT LIST [3]
-(  19)         STATEMENT (EXPRESSION)
-(  19)           BINARY_OP '='
-(  19)             IDENTIFIER 'next'
-(  19)             BINARY_OP '+'
-(  19)               IDENTIFIER 'previous'
-(  19)               IDENTIFIER 'current'
-(  23)         STATEMENT (EXPRESSION)
-(  23)           BINARY_OP '='
-(  23)             IDENTIFIER 'previous'
-(  23)             IDENTIFIER 'current'
-(  24)         STATEMENT (EXPRESSION)
-(  24)           BINARY_OP '='
-(  24)             IDENTIFIER 'current'
-(  24)             IDENTIFIER 'next'
-(  28)     STATEMENT (WRITE)
-(  28)       EXPR LIST [1]
-(  28)         IDENTIFIER 'current'
+(  21)       STATEMENT LIST [3]
+(  21)         STATEMENT (EXPRESSION)
+(  21)           BINARY_OP '='
+(  21)             IDENTIFIER 'next'
+(  21)             BINARY_OP '+'
+(  21)               IDENTIFIER 'previous'
+(  21)               IDENTIFIER 'current'
+(  25)         STATEMENT (EXPRESSION)
+(  25)           BINARY_OP '='
+(  25)             IDENTIFIER 'previous'
+(  25)             IDENTIFIER 'current'
+(  26)         STATEMENT (EXPRESSION)
+(  26)           BINARY_OP '='
+(  26)             IDENTIFIER 'current'
+(  26)             IDENTIFIER 'next'
+(  30)     STATEMENT (WRITE)
+(  30)       EXPR LIST [4]
+(  30)         LITERAL 'string' 'fibonacci('
+(  30)         IDENTIFIER 'n'
+(  30)         LITERAL 'string' ') = '
+(  30)         IDENTIFIER 'current'
