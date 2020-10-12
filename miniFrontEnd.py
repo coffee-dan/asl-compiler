@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-10-31
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-01
 #---------#---------#---------#---------#---------#--------#
 import logging
 import sys
@@ -31,7 +31,7 @@ reserved = { rw : rw.upper() for rw in (
   ) }
 
 tokens = [
-  'ID', 'INT_LITERAL', 'REAL_LITERAL',
+  'ID', 'INT_LITERAL', 'REAL_LITERAL', 'STRING_LITERAL',
   'ASSIGN',
   'PLUS', 'MINUS',
   'MULTIPLY', 'DIVIDE', 'MODULUS',
@@ -89,6 +89,10 @@ def t_INT_LITERAL( t ) :
 #       that use the escape sequences \", \\, \a, \b, \e, \f, \n,
 #       \r, \t, and \v.  Note that Python does not support all
 #       these escapes so you'll have to hand-code some of them.
+def t_STRING_LITERAL( t ) :
+	r'"([^"\\]|(\\["\\abefnrtv])|(\\[xX][0-9a-fA-F][0-9a-fA-F]))*"'
+	t.value = str( t.value )
+	return t
 
 #-------------------
 # Ignored characters
@@ -338,10 +342,60 @@ def p_expression_real_literal( p ) :
   p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'real' ), p[1] )
 
 # String literal
+# TODO: Add t_STRING_LITERAL( t ) here.
+#       Ensure that you deal with empty strings and strings
+#       that use the escape sequences \", \\, \a, \b, \e, \f, \n,
+#       \r, \t, and \v.  Note that Python does not support all
+#       these escapes so you'll have to hand-code some of them.
+
 # TODO: Put p_expression_string_literal( p ) here.
 #       Use 'string' as the name of the type. (Look at the
 #       INT_LITERAL and REAL_LITERAL cases for examples of what
 #       this should look like.
+def p_expression_string_literal( p ) :
+	'expression : STRING_LITERAL'
+	string_parts = []
+	p[1] = p[1][1:-1]
+
+	i = 0
+	while i < len( p[1] ) :
+		if p[1][i] == '\\' :
+
+			escape_char = p[1][ i+1 ]
+			i += 1
+
+			if escape_char == '"' :
+				string_parts.append( '"' )
+			elif escape_char == '\\\\' :
+				string_parts.append( r'\\' )
+			elif escape_char == 'a' :
+				string_parts.append( '\x07' )
+			elif escape_char == 'b' :
+				string_parts.append( '\x08' )
+			elif escape_char == 'e' :
+				string_parts.append( '\x1b' )
+			elif escape_char == 'f' :
+				string_parts.append( '\x0c' )
+			elif escape_char == 'n' :
+				string_parts.append( '\n' )
+			elif escape_char == 'r' :
+				string_parts.append( '\r' )
+			elif escape_char == 't' :
+				string_parts.append( '\t' )
+			elif escape_char == 'v' :
+				string_parts.append( '\x0b' )
+			elif escape_char == 'x' or escape_char == 'X' :
+				escape_sequence = f'\\x{p[1][ i+1 ]}{p[1][ i+2 ]}'
+				intended_char = bytes( escape_sequence, 'utf-8' ).decode( 'unicode_escape' )
+				i += 2
+				string_parts.append( intended_char )
+			else :
+				string_parts.append( escape_char )
+		else :
+			string_parts.append( p[1][i] )
+		i += 1
+	string = ''.join( string_parts )
+	p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'string' ), string )
 
 # Name
 def p_expression_id( p ) :
