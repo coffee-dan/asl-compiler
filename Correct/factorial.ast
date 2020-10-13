@@ -1,0 +1,38 @@
+# AST for 'factorial.asl'
+SCOPE 'SCOPE_1' <6>
+  VARIABLE_INIT SCOPE_1:n
+    LITERAL 'int', 0
+  WRITE <1>
+    LITERAL 'string', 'Enter n: '
+  READ <1>
+    LVALUE 'SCOPE_1:n' 'int'
+  VARIABLE_INIT SCOPE_1:fact
+    LITERAL 'int', 1
+  SCOPE 'SCOPE_2' <2>
+    VARIABLE_INIT SCOPE_2:i
+      LITERAL 'int', 0
+    FOR
+      LVALUE 'SCOPE_2:i' 'int'
+      LITERAL 'int', 1
+      LVALUE 'SCOPE_1:n' 'int'
+      LITERAL 'int', 1
+      SCOPE 'SCOPE_3' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:fact' 'int'
+          BINARY_OP '*' 'int'
+            LVALUE 'SCOPE_1:fact' 'int'
+            LVALUE 'SCOPE_2:i' 'int'
+  WRITE <4>
+    LVALUE 'SCOPE_1:n' 'int'
+    LITERAL 'string', '! = '
+    LVALUE 'SCOPE_1:fact' 'int'
+    LITERAL 'string', '\n'
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [2] <ENVIRONMENT>
+  <Entry SCOPE_1(13) 'fact':'int'>
+  <Entry SCOPE_1(7) 'n':'int'>
+Scope SCOPE_2(0) [1] <SCOPE_1>
+  <Entry SCOPE_2(0) 'i':'int'>
+Scope SCOPE_3(17) [0] <SCOPE_2>

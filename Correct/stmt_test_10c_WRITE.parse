@@ -1,25 +1,37 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [2]
-(   7)     STATEMENT (WRITE)
-(   7)       EXPR LIST [3]
-(   7)         IDENTIFIER 'a'
-(   7)         IDENTIFIER 'b'
-(   7)         IDENTIFIER 'c'
-(   8)     STATEMENT (WRITE)
-(   8)       EXPR LIST [3]
-(   8)         BINARY_OP '-'
-(   8)           IDENTIFIER 'a'
-(   8)           BINARY_OP '^'
-(   8)             IDENTIFIER 'b'
-(   8)             IDENTIFIER 'c'
-(   8)         BINARY_OP '/'
-(   8)           UNARY_OP '!'
-(   8)             IDENTIFIER 'a'
-(   8)           BINARY_OP '^'
-(   8)             IDENTIFIER 'b'
-(   8)             LITERAL 'int' 3
-(   8)         BINARY_OP '+'
-(   8)           BINARY_OP '+'
-(   8)             IDENTIFIER 'a'
-(   8)             IDENTIFIER 'b'
-(   8)           IDENTIFIER 'c'
+(   5)   STATEMENT LIST [5]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'b'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'c'
+(   0)       LITERAL 'int' 0
+(   9)     STATEMENT (WRITE)
+(   9)       EXPR LIST [3]
+(   9)         IDENTIFIER 'a'
+(   9)         IDENTIFIER 'b'
+(   9)         IDENTIFIER 'c'
+(  10)     STATEMENT (WRITE)
+(  10)       EXPR LIST [3]
+(  10)         BINARY_OP '-'
+(  10)           IDENTIFIER 'a'
+(  10)           BINARY_OP '^'
+(  10)             IDENTIFIER 'b'
+(  10)             IDENTIFIER 'c'
+(  10)         BINARY_OP '/'
+(  10)           UNARY_OP '!'
+(  10)             IDENTIFIER 'a'
+(  10)           BINARY_OP '^'
+(  10)             IDENTIFIER 'b'
+(  10)             LITERAL 'int' 3
+(  10)         BINARY_OP '+'
+(  10)           BINARY_OP '+'
+(  10)             IDENTIFIER 'a'
+(  10)             IDENTIFIER 'b'
+(  10)           IDENTIFIER 'c'

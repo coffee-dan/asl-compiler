@@ -1,14 +1,23 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [1]
-(   7)     STATEMENT (FOR)
-(   7)       IDENTIFIER 'j'
-(   7)       LITERAL 'int' 2
-(   7)       LITERAL 'int' 11
-(   0)       LITERAL 'int' 1
-(   8)       STATEMENT LIST [1]
-(   8)         STATEMENT (EXPRESSION)
-(   8)           BINARY_OP '='
-(   8)             IDENTIFIER 'b'
-(   8)             BINARY_OP '^'
-(   8)               IDENTIFIER 'j'
-(   8)               LITERAL 'int' 3
+(   5)   STATEMENT LIST [2]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'b'
+(   0)       LITERAL 'int' 0
+(   0)     STATEMENT LIST [2]
+(   0)       STATEMENT (DECLARATION)
+(   0)         TYPE ('int')
+(   9)         IDENTIFIER 'j'
+(   0)         LITERAL 'int' 0
+(   9)       STATEMENT (FOR)
+(   9)         IDENTIFIER 'j'
+(   9)         LITERAL 'int' 2
+(   9)         LITERAL 'int' 11
+(   0)         LITERAL 'int' 1
+(  10)         STATEMENT LIST [1]
+(  10)           STATEMENT (EXPRESSION)
+(  10)             BINARY_OP '='
+(  10)               IDENTIFIER 'b'
+(  10)               BINARY_OP '^'
+(  10)                 IDENTIFIER 'j'
+(  10)                 LITERAL 'int' 3

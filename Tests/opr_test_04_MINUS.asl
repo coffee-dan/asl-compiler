@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int a; int b;
+
   // Test of MINUS associativity.
 
   // Strict left-to-right test.

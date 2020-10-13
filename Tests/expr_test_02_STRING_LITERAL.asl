@@ -1,6 +1,6 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-31
+// 2019-11-01
 
 {
   // String literal can be empty.
@@ -19,6 +19,14 @@
   // Even when surrounded by other characters ...
   "az\ayb\bxc\ewd\fve\nuf\rtg\tsh\vri";
 
+  // \\ becomes \ but the resulting \a should NOT be
+  // considered an instance of an escape sequence.
+  "\\a\\b\\e\\f\\n\\r\\t\\v";
+
+  // Not lexical error ...
+  "\\q\\s\\u\\w\\x\\y\\z";
+
   // Or a string literal can just be regular characters.
   "Hi, there.  I'm a string literal.";
 }
+

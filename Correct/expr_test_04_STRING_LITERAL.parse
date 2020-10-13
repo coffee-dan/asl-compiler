@@ -1,0 +1,90 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [44]
+(   7)     STATEMENT (EXPRESSION)
+(   7)       LITERAL 'string' '\x00\x01\x02\x03\x04\x05\x06\x07'
+(   9)     STATEMENT (EXPRESSION)
+(   9)       LITERAL 'string' '\x00\x01\x02\x03\x04\x05\x06\x07'
+(  10)     STATEMENT (EXPRESSION)
+(  10)       LITERAL 'string' '\x08\t\n\x0b\x0c\r\x0e\x0f'
+(  11)     STATEMENT (EXPRESSION)
+(  11)       LITERAL 'string' '\x10\x11\x12\x13\x14\x15\x16\x17'
+(  12)     STATEMENT (EXPRESSION)
+(  12)       LITERAL 'string' '\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f'
+(  13)     STATEMENT (EXPRESSION)
+(  13)       LITERAL 'string' ' !"#$%&\''
+(  14)     STATEMENT (EXPRESSION)
+(  14)       LITERAL 'string' '()*+,-./'
+(  15)     STATEMENT (EXPRESSION)
+(  15)       LITERAL 'string' '01234567'
+(  16)     STATEMENT (EXPRESSION)
+(  16)       LITERAL 'string' '89:;<=>?'
+(  18)     STATEMENT (EXPRESSION)
+(  18)       LITERAL 'string' '\x00\x01\x02\x03\x04\x05\x06\x07'
+(  19)     STATEMENT (EXPRESSION)
+(  19)       LITERAL 'string' '\x08\t\n\x0b\x0c\r\x0e\x0f'
+(  20)     STATEMENT (EXPRESSION)
+(  20)       LITERAL 'string' '\x10\x11\x12\x13\x14\x15\x16\x17'
+(  21)     STATEMENT (EXPRESSION)
+(  21)       LITERAL 'string' '\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f'
+(  22)     STATEMENT (EXPRESSION)
+(  22)       LITERAL 'string' ' !"#$%&\''
+(  23)     STATEMENT (EXPRESSION)
+(  23)       LITERAL 'string' '()*+,-./'
+(  24)     STATEMENT (EXPRESSION)
+(  24)       LITERAL 'string' '01234567'
+(  25)     STATEMENT (EXPRESSION)
+(  25)       LITERAL 'string' '89:;<=>?'
+(  26)     STATEMENT (EXPRESSION)
+(  26)       LITERAL 'string' '@ABCDEFG'
+(  27)     STATEMENT (EXPRESSION)
+(  27)       LITERAL 'string' 'HIJKLMNO'
+(  28)     STATEMENT (EXPRESSION)
+(  28)       LITERAL 'string' 'PQRSTUVW'
+(  29)     STATEMENT (EXPRESSION)
+(  29)       LITERAL 'string' 'XYZ[\\]^_'
+(  30)     STATEMENT (EXPRESSION)
+(  30)       LITERAL 'string' '`abcdefg'
+(  31)     STATEMENT (EXPRESSION)
+(  31)       LITERAL 'string' 'hijklmno'
+(  32)     STATEMENT (EXPRESSION)
+(  32)       LITERAL 'string' 'pqrstuvw'
+(  33)     STATEMENT (EXPRESSION)
+(  33)       LITERAL 'string' 'xyz{|}~\x7f'
+(  34)     STATEMENT (EXPRESSION)
+(  34)       LITERAL 'string' '\x80\x81\x82\x83\x84\x85\x86\x87'
+(  35)     STATEMENT (EXPRESSION)
+(  35)       LITERAL 'string' '\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f'
+(  36)     STATEMENT (EXPRESSION)
+(  36)       LITERAL 'string' '\x90\x91\x92\x93\x94\x95\x96\x97'
+(  37)     STATEMENT (EXPRESSION)
+(  37)       LITERAL 'string' '\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f'
+(  38)     STATEMENT (EXPRESSION)
+(  38)       LITERAL 'string' '\xa0¡¢£¤¥¦§'
+(  39)     STATEMENT (EXPRESSION)
+(  39)       LITERAL 'string' '¨©ª«¬\xad®¯'
+(  40)     STATEMENT (EXPRESSION)
+(  40)       LITERAL 'string' '°±²³´µ¶·'
+(  41)     STATEMENT (EXPRESSION)
+(  41)       LITERAL 'string' '¸¹º»¼½¾¿'
+(  42)     STATEMENT (EXPRESSION)
+(  42)       LITERAL 'string' 'ÀÁÂÃÄÅÆÇ'
+(  43)     STATEMENT (EXPRESSION)
+(  43)       LITERAL 'string' 'ÈÉÊËÌÍÎÏ'
+(  44)     STATEMENT (EXPRESSION)
+(  44)       LITERAL 'string' 'ÐÑÒÓÔÕÖ×'
+(  45)     STATEMENT (EXPRESSION)
+(  45)       LITERAL 'string' 'ØÙÚÛÜÝÞß'
+(  46)     STATEMENT (EXPRESSION)
+(  46)       LITERAL 'string' 'àáâãäåæç'
+(  47)     STATEMENT (EXPRESSION)
+(  47)       LITERAL 'string' 'èéêëìíîï'
+(  48)     STATEMENT (EXPRESSION)
+(  48)       LITERAL 'string' 'ðñòóôõö÷'
+(  49)     STATEMENT (EXPRESSION)
+(  49)       LITERAL 'string' 'øùúûüýþÿ'
+(  52)     STATEMENT (EXPRESSION)
+(  52)       LITERAL 'string' '\\0\\1\\2\\3\\4\\5\\6\\7'
+(  53)     STATEMENT (EXPRESSION)
+(  53)       LITERAL 'string' '\\10\\11\\12\\13\\14\\15\\16\\17'
+(  54)     STATEMENT (EXPRESSION)
+(  54)       LITERAL 'string' '\\100\\101\\102\\103\\104\\105\\106\\107'

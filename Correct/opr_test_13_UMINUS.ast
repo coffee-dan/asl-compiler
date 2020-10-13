@@ -1,0 +1,15 @@
+# AST for 'opr_test_13_UMINUS.asl'
+SCOPE 'SCOPE_1' <2>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  BINARY_OP '=' 'int'
+    LVALUE 'SCOPE_1:a' 'int'
+    UNARY_OP '-' 'int'
+      UNARY_OP '-' 'int'
+        UNARY_OP '-' 'int'
+          LITERAL 'int', 1
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [1] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>

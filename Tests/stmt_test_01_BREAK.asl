@@ -1,7 +1,9 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
-  break;
+  while 1 do
+    break;
+  end while;
 }

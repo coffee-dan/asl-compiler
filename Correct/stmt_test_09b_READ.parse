@@ -1,7 +1,19 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [1]
-(   7)     STATEMENT (READ)
-(   7)       ID LIST [3]
-(   7)         IDENTIFIER 'a'
-(   7)         IDENTIFIER 'b'
-(   7)         IDENTIFIER 'c'
+(   5)   STATEMENT LIST [4]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'b'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'c'
+(   0)       LITERAL 'int' 0
+(   9)     STATEMENT (READ)
+(   9)       ID LIST [3]
+(   9)         IDENTIFIER 'a'
+(   9)         IDENTIFIER 'b'
+(   9)         IDENTIFIER 'c'

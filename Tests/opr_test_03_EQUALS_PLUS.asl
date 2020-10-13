@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int a; int b; int c; int d; int e; int f;
+
   // Test of EQUALS / PLUS precedence / associativity.
   // PLUS has a higher precedence than EQUALS so the left-to-right
   // test will NOT be strict.  The PLUS operations will happen

@@ -1,5 +1,5 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [6]
+(   5)   STATEMENT LIST [8]
 (   7)     STATEMENT (EXPRESSION)
 (   7)       LITERAL 'string' ''
 (  10)     STATEMENT (EXPRESSION)
@@ -10,5 +10,9 @@
 (  17)       LITERAL 'string' '\x07\x08\x1b\x0c\n\r\t\x0b'
 (  20)     STATEMENT (EXPRESSION)
 (  20)       LITERAL 'string' 'az\x07yb\x08xc\x1bwd\x0cve\nuf\rtg\tsh\x0bri'
-(  23)     STATEMENT (EXPRESSION)
-(  23)       LITERAL 'string' "Hi, there.  I'm a string literal."
+(  24)     STATEMENT (EXPRESSION)
+(  24)       LITERAL 'string' '\\a\\b\\e\\f\\n\\r\\t\\v'
+(  27)     STATEMENT (EXPRESSION)
+(  27)       LITERAL 'string' '\\q\\s\\u\\w\\x\\y\\z'
+(  30)     STATEMENT (EXPRESSION)
+(  30)       LITERAL 'string' "Hi, there.  I'm a string literal."

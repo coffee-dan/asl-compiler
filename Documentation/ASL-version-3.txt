@@ -1,5 +1,5 @@
 #-----------------------------------------------------------
-# ASL version 2
+# ASL version 3
 #-----------------------------------------------------------
 # Program
 
@@ -15,15 +15,29 @@
 
   break
 
+  * A break statement may occur only within a looping statement
+    (a while or a for).  It may be arbitrarily nested.
+
 #---------------------------------------
 # Statement:  Continue
 
   continue
 
+  * A continue statement may occur only within a looping statement
+    (a while or a for).  It may be arbitrarily nested.
+
 #---------------------------------------
 # Statement:  Declaration
 
   <type> <identifier> [ = <expression> ]
+
+  * An identifier may not be redeclared within the same scope.
+    (It's OK if it's redeclared in a nested scope, just not the
+     same scope.)
+
+  * The type of the initialization expression must be the same as
+    the declared type.  (E.g., no integer initializers for real
+    variables and vice-versa.)
 
 #---------------------------------------
 # Statement:  Expression
@@ -56,16 +70,22 @@
 
     STRING_LITERAL  any characters except " and \n within
       quotation marks (").  The following escapes are permitted:
-        \"  a " character
-        \\  a \ character
-        \a  Alert            -> character  7 (decimal)
-        \b  Backspace        -> character  8 (decimal)
-        \e  Escape           -> character 27 (decimal)
-        \f  Formfeed         -> character 12 (decimal)
-        \n  Newline          -> character 10 (decimal)
-        \r  Carriagee Return -> character 13 (decimal)
-        \t  Horizontal Tab   -> character  9 (decimal)
-        \v  Vertical Tab     -> character 11 (decimal)
+        \"    a " character
+        \\    a \ character
+        \?    a ? character
+        \a    Alert            -> character  7 (decimal)
+        \b    Backspace        -> character  8 (decimal)
+        \e    Escape           -> character 27 (decimal)
+        \f    Formfeed         -> character 12 (decimal)
+        \n    Newline          -> character 10 (decimal)
+        \r    Carriage Return  -> character 13 (decimal)
+        \t    Horizontal Tab   -> character  9 (decimal)
+        \v    Vertical Tab     -> character 11 (decimal)
+        \xnn  character nn, where nn is a two-digit hexadecimal
+                number
+        \ooo  character ooo, where ooo is an up-to-three-digit
+                octal number. ooo must be less than or equal to
+                377 (octal)
 
 #---------------------------------------
 # Statement:  For
@@ -73,6 +93,11 @@
   for <identifer> = <expression> to <expression> [ by <expression> ] do
     <statement_list>
   end for
+
+  * The start, stop, and step expressions must be of type integer.
+
+  * The index variable may not appear on the LHS of any assignment
+    anywhere within the body of the loop.
 
 #---------------------------------------
 # Statement:  If
@@ -85,10 +110,15 @@
       <statement_list> ]
   end if
 
+  * The test expressions must be of type integer.
+
 #---------------------------------------
 # Statement: Read
 
   read( <identifier> [ , <identifier> ]* )
+
+  * Only lvalues (for now, this mean identifiers) may be listed
+    in a read statement.
 
 #---------------------------------------
 # Statement: While
@@ -97,11 +127,12 @@
     <statement_list>
   end while
 
+  * The test expression must be of type integer.
+
 #---------------------------------------
 # Statement: Write
 
   write( [ <expression> [ , <expression> ]* ]? )
-
 
 #---------------------------------------
 # Type (Scalar)

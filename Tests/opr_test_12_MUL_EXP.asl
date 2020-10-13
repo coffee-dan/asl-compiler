@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int a; int b;
+
   // Test of MULTIPLY / EXPONENTIATION precedence / associativity.
   // EXPONENTIATION has a higher precedence than MULTIPLY so the
   // left-to-right test will NOT be strict.  The EXPONENTIATION

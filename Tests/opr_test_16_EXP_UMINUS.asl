@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int a;
+
   // Test of EXPONENTIATION / UMINUS precedence / associativity.
   // UMINUS has a higher precedence than EXPONENTIATION so the
   // right-to-left test will NOT be strict.  The UMINUS

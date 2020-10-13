@@ -1,35 +1,83 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [1]
-(   7)     STATEMENT (IF)
-(   7)       IDENTIFIER 'ac'
-(   8)       STATEMENT LIST [1]
-(   8)         STATEMENT (EXPRESSION)
-(   8)           BINARY_OP '='
-(   8)             IDENTIFIER 'ad'
-(   8)             BINARY_OP '/'
-(   8)               LITERAL 'int' 9
-(   8)               LITERAL 'int' 10
-(   0)       ELIF LIST [2]
-(   9)         IDENTIFIER 'ae'
-(  10)         STATEMENT LIST [1]
-(  10)           STATEMENT (EXPRESSION)
-(  10)             BINARY_OP '='
-(  10)               IDENTIFIER 'af'
-(  10)               BINARY_OP '%'
-(  10)                 IDENTIFIER 'ag'
-(  10)                 IDENTIFIER 'ah'
-(  11)         IDENTIFIER 'ai'
-(  12)         STATEMENT LIST [1]
-(  12)           STATEMENT (EXPRESSION)
-(  12)             BINARY_OP '='
-(  12)               IDENTIFIER 'aj'
-(  12)               BINARY_OP '^'
-(  12)                 IDENTIFIER 'ak'
-(  12)                 IDENTIFIER 'al'
-(  14)       STATEMENT LIST [1]
-(  14)         STATEMENT (EXPRESSION)
-(  14)           BINARY_OP '='
-(  14)             IDENTIFIER 'am'
-(  14)             BINARY_OP '+'
-(  14)               IDENTIFIER 'an'
-(  14)               LITERAL 'int' 1
+(   5)   STATEMENT LIST [13]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'ac'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'ad'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'ae'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'af'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'ag'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'ah'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'ai'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'aj'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'ak'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'al'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'am'
+(   0)       LITERAL 'int' 0
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'an'
+(   0)       LITERAL 'int' 0
+(  10)     STATEMENT (IF)
+(   0)       TEST LIST [3]
+(  10)         IDENTIFIER 'ac'
+(  11)         STATEMENT LIST [1]
+(  11)           STATEMENT (EXPRESSION)
+(  11)             BINARY_OP '='
+(  11)               IDENTIFIER 'ad'
+(  11)               BINARY_OP '/'
+(  11)                 LITERAL 'int' 9
+(  11)                 LITERAL 'int' 10
+(  12)         IDENTIFIER 'ae'
+(  13)         STATEMENT LIST [1]
+(  13)           STATEMENT (EXPRESSION)
+(  13)             BINARY_OP '='
+(  13)               IDENTIFIER 'af'
+(  13)               BINARY_OP '%'
+(  13)                 IDENTIFIER 'ag'
+(  13)                 IDENTIFIER 'ah'
+(  14)         IDENTIFIER 'ai'
+(  15)         STATEMENT LIST [1]
+(  15)           STATEMENT (EXPRESSION)
+(  15)             BINARY_OP '='
+(  15)               IDENTIFIER 'aj'
+(  15)               BINARY_OP '^'
+(  15)                 IDENTIFIER 'ak'
+(  15)                 IDENTIFIER 'al'
+(  17)       STATEMENT LIST [1]
+(  17)         STATEMENT (EXPRESSION)
+(  17)           BINARY_OP '='
+(  17)             IDENTIFIER 'am'
+(  17)             BINARY_OP '+'
+(  17)               IDENTIFIER 'an'
+(  17)               LITERAL 'int' 1

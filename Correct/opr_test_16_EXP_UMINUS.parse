@@ -1,17 +1,21 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [2]
-(  12)     STATEMENT (EXPRESSION)
-(  12)       BINARY_OP '='
-(  12)         IDENTIFIER 'a'
-(  12)         BINARY_OP '^'
-(  12)           UNARY_OP '-'
-(  12)             LITERAL 'int' 2
-(  12)           LITERAL 'int' 3
-(  13)     STATEMENT (EXPRESSION)
-(  13)       BINARY_OP '='
-(  13)         IDENTIFIER 'a'
-(  13)         BINARY_OP '^'
-(  13)           UNARY_OP '-'
-(  13)             UNARY_OP '-'
-(  13)               LITERAL 'int' 2
-(  13)           LITERAL 'int' 3
+(   5)   STATEMENT LIST [3]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(  14)     STATEMENT (EXPRESSION)
+(  14)       BINARY_OP '='
+(  14)         IDENTIFIER 'a'
+(  14)         BINARY_OP '^'
+(  14)           UNARY_OP '-'
+(  14)             LITERAL 'int' 2
+(  14)           LITERAL 'int' 3
+(  15)     STATEMENT (EXPRESSION)
+(  15)       BINARY_OP '='
+(  15)         IDENTIFIER 'a'
+(  15)         BINARY_OP '^'
+(  15)           UNARY_OP '-'
+(  15)             UNARY_OP '-'
+(  15)               LITERAL 'int' 2
+(  15)           LITERAL 'int' 3

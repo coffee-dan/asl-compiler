@@ -1,0 +1,11 @@
+# AST for 'stmt_test_09a_READ.asl'
+SCOPE 'SCOPE_1' <2>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  READ <1>
+    LVALUE 'SCOPE_1:a' 'int'
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [1] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>

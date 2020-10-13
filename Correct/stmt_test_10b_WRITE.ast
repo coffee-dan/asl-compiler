@@ -1,0 +1,23 @@
+# AST for 'stmt_test_10b_WRITE.asl'
+SCOPE 'SCOPE_1' <5>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:b
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:c
+    LITERAL 'int', 0
+  WRITE <1>
+    LVALUE 'SCOPE_1:a' 'int'
+  WRITE <1>
+    BINARY_OP '+' 'int'
+      LVALUE 'SCOPE_1:a' 'int'
+      BINARY_OP '/' 'int'
+        LVALUE 'SCOPE_1:b' 'int'
+        LVALUE 'SCOPE_1:c' 'int'
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [3] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>
+  <Entry SCOPE_1(6) 'b':'int'>
+  <Entry SCOPE_1(6) 'c':'int'>

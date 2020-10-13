@@ -1,0 +1,45 @@
+# AST for 'stmt_test_05e_IF.asl'
+SCOPE 'SCOPE_1' <6>
+  VARIABLE_INIT SCOPE_1:x
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:y
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:z
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:aa
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ab
+    LITERAL 'int', 0
+  IF <2>
+      LVALUE 'SCOPE_1:x' 'int'
+      SCOPE 'SCOPE_2' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:y' 'int'
+          BINARY_OP '+' 'int'
+            LITERAL 'int', 3
+            LITERAL 'int', 4
+      LVALUE 'SCOPE_1:z' 'int'
+      SCOPE 'SCOPE_3' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:aa' 'int'
+          BINARY_OP '-' 'int'
+            LITERAL 'int', 5
+            LITERAL 'int', 6
+    SCOPE 'SCOPE_4' <1>
+      BINARY_OP '=' 'int'
+        LVALUE 'SCOPE_1:ab' 'int'
+        BINARY_OP '*' 'int'
+          LITERAL 'int', 7
+          LITERAL 'int', 8
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [5] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'aa':'int'>
+  <Entry SCOPE_1(6) 'ab':'int'>
+  <Entry SCOPE_1(6) 'x':'int'>
+  <Entry SCOPE_1(6) 'y':'int'>
+  <Entry SCOPE_1(6) 'z':'int'>
+Scope SCOPE_2(10) [0] <SCOPE_1>
+Scope SCOPE_3(12) [0] <SCOPE_1>
+Scope SCOPE_4(14) [0] <SCOPE_1>

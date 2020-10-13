@@ -1,0 +1,74 @@
+# AST for 'stmt_test_05f_IF.asl'
+SCOPE 'SCOPE_1' <13>
+  VARIABLE_INIT SCOPE_1:ac
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ad
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ae
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:af
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ag
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ah
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ai
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:aj
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:ak
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:al
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:am
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:an
+    LITERAL 'int', 0
+  IF <3>
+      LVALUE 'SCOPE_1:ac' 'int'
+      SCOPE 'SCOPE_2' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:ad' 'int'
+          BINARY_OP '/' 'int'
+            LITERAL 'int', 9
+            LITERAL 'int', 10
+      LVALUE 'SCOPE_1:ae' 'int'
+      SCOPE 'SCOPE_3' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:af' 'int'
+          BINARY_OP '%' 'int'
+            LVALUE 'SCOPE_1:ag' 'int'
+            LVALUE 'SCOPE_1:ah' 'int'
+      LVALUE 'SCOPE_1:ai' 'int'
+      SCOPE 'SCOPE_4' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:aj' 'int'
+          BINARY_OP '^' 'int'
+            LVALUE 'SCOPE_1:ak' 'int'
+            LVALUE 'SCOPE_1:al' 'int'
+    SCOPE 'SCOPE_5' <1>
+      BINARY_OP '=' 'int'
+        LVALUE 'SCOPE_1:am' 'int'
+        BINARY_OP '+' 'int'
+          LVALUE 'SCOPE_1:an' 'int'
+          LITERAL 'int', 1
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [12] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'ac':'int'>
+  <Entry SCOPE_1(6) 'ad':'int'>
+  <Entry SCOPE_1(6) 'ae':'int'>
+  <Entry SCOPE_1(6) 'af':'int'>
+  <Entry SCOPE_1(6) 'ag':'int'>
+  <Entry SCOPE_1(6) 'ah':'int'>
+  <Entry SCOPE_1(7) 'ai':'int'>
+  <Entry SCOPE_1(7) 'aj':'int'>
+  <Entry SCOPE_1(7) 'ak':'int'>
+  <Entry SCOPE_1(7) 'al':'int'>
+  <Entry SCOPE_1(7) 'am':'int'>
+  <Entry SCOPE_1(7) 'an':'int'>
+Scope SCOPE_2(11) [0] <SCOPE_1>
+Scope SCOPE_3(13) [0] <SCOPE_1>
+Scope SCOPE_4(15) [0] <SCOPE_1>
+Scope SCOPE_5(17) [0] <SCOPE_1>

@@ -1,0 +1,11 @@
+# AST for 'stmt_test_01_BREAK.asl'
+SCOPE 'SCOPE_1' <1>
+  WHILE
+    LITERAL 'int', 1
+    SCOPE 'SCOPE_2' <1>
+      BREAK
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [0] <ENVIRONMENT>
+Scope SCOPE_2(7) [0] <SCOPE_1>

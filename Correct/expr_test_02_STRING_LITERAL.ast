@@ -1,0 +1,14 @@
+# AST for 'expr_test_02_STRING_LITERAL.asl'
+SCOPE 'SCOPE_1' <8>
+  LITERAL 'string', ''
+  LITERAL 'string', '"'
+  LITERAL 'string', '\\'
+  LITERAL 'string', '\x07\x08\x1b\x0c\n\r\t\x0b'
+  LITERAL 'string', 'az\x07yb\x08xc\x1bwd\x0cve\nuf\rtg\tsh\x0bri'
+  LITERAL 'string', '\\a\\b\\e\\f\\n\\r\\t\\v'
+  LITERAL 'string', '\\q\\s\\u\\w\\x\\y\\z'
+  LITERAL 'string', "Hi, there.  I'm a string literal."
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [0] <ENVIRONMENT>

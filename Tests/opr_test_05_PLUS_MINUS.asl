@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int a; int b;
+
   // Test of PLUS / MINUS precedence / associativity.
   // PLUS and MINUS have the same settings so these should parse
   // just as if it were the same operator all the way through.

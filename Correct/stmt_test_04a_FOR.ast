@@ -1,0 +1,26 @@
+# AST for 'stmt_test_04a_FOR.asl'
+SCOPE 'SCOPE_1' <2>
+  VARIABLE_INIT SCOPE_1:b
+    LITERAL 'int', 0
+  SCOPE 'SCOPE_2' <2>
+    VARIABLE_INIT SCOPE_2:j
+      LITERAL 'int', 0
+    FOR
+      LVALUE 'SCOPE_2:j' 'int'
+      LITERAL 'int', 2
+      LITERAL 'int', 11
+      LITERAL 'int', 1
+      SCOPE 'SCOPE_3' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:b' 'int'
+          BINARY_OP '^' 'int'
+            LVALUE 'SCOPE_2:j' 'int'
+            LITERAL 'int', 3
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [1] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'b':'int'>
+Scope SCOPE_2(0) [1] <SCOPE_1>
+  <Entry SCOPE_2(0) 'j':'int'>
+Scope SCOPE_3(10) [0] <SCOPE_2>

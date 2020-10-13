@@ -1,0 +1,199 @@
+#-----------------------------------------------------------
+# AST Summary
+# 2019-11-12
+#-----------------------------------------------------------
+# Notation
+#-------------------
+
+Inside angles, < ... >, indicates categories of information.
+
+ -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE --
+
+The following AST Summary is just that -- a summary.  Read it
+carefully (and along with the Symbol Table summary).
+
+ -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE --
+
+#-----------------------------------------------------------
+# AST Summary
+#-------------------
+# Expressions
+
+# All of the different kinds of expressions have the following
+# general AST form,
+
+    ( 'EXPR', <parts>, <type>, <const>, <value> )
+
+# where,
+#   <type>   : The type of the result of the expression.  At
+#              present, only 'int', 'real', and 'string' are
+#              allowed.
+#   <const>  : True if the expression is a constant.
+#   <value>  : If the expression is a constant, this is the
+#              expression's value.  If not a constant, this should
+#              be None.
+
+# The structure of <parts> varies depending on the kind of
+# expression this is.  The following forms are acceptable,
+
+    ( 'LITERAL', ) -- All literals are constants.  The <type> and
+      <value> of the literal are expressed above.
+
+    ( 'LVALUE', <name> ) -- All lvalues are NOT constants.  The
+      <name> is the name of the lvalue.  The lvalue's <type> is
+      expressed above.  The <value> should be None.
+
+    ( 'BINARY_OP', <op>, <left>, <right> ) -- The <op> is which
+      operator this is.  <left> and <right> are the ASTs for the
+      left and right sides of the operator.
+
+      The <type> should be determined by looking at the <op> and
+      the types of its left and right expressions.
+
+      Whether this expression is a constant depends on whether
+      <left> and <right> are constant.  If both are, then this
+      one will be as well.  In that case, compute the <value>
+      based on the values of the left and right ASTs and the
+      operator.  If both sides are not constant, this one won't
+      be either and its value will be None.
+
+      When the result of an expression is constant, you can
+      generate a LITERAL expression with the correct type and
+      value instead of a BINARY_OP.  (This will simplify the AST
+      incredibly in certain circumstances.)
+
+    ( 'UNARY_OP', <op>, <right> ) -- Similar to the binary
+      operator case.
+
+Examples:
+
+  ( 'EXPR', [ 'LITERAL' ], 'int', True, 23 ) -- The AST for an
+    occurance of the integer literal 23.  It is a constant
+    (obviously, since it's a literal) and it's value is 23.
+
+  ( 'EXPR', [ 'LVALUE', 'Scope_1:a' ], 'int', False, None ) -- The
+    AST for an occurance of the lvalue 'a' in the scope 'Scope_1'.
+    (See the discussion of scopes in the Symbol Table notes.)
+
+  ( 'EXPR', [ 'BINARY_OP', '+', <left>, <right> ], 'int', False, None )
+    -- The AST for an occurance of the PLUS binary operator to two
+    other ASTs, <left> and <right>.  In this example, these were
+    not constant, so this AST isn't either.
+
+#-------------------
+# BREAK Statement -- The break-out-of-looping-statement statement.
+
+    ( 'BREAK', )
+
+#-------------------
+# CONTINUE Statement -- The continue-with-next-iteration-of-
+# looping-statement statement.
+
+    ( 'CONTINUE', )
+
+#-------------------
+# FOR Statement
+
+    ( 'FOR', <index>, <start>, <stop>, <step>, <body> )
+
+# where,
+#   <index>  : The AST for the FOR's index variable.
+#   <start>  : The AST for the FOR's starting value expression.
+#   <stop>   : The AST for the FOR's stopping value expression.
+#   <step>   : The AST for the FOR's step value expression.
+#   <body>   : The AST for the FOR's body contents.
+
+#-------------------
+# IF Statement
+
+    ( 'IF', <testList>, <else> )
+
+# where,
+#   <testList>  : A list of pairs, each of which is an expression
+#                 AST followed by a statement list AST.
+#   <else>      : The AST for the IF's else statement list.  If
+#                 the else is empty, you can use a NOOP here.
+#
+# As an optimization, check if any of the test expressions are
+# constant.  If so, instead of making an IF AST, you should just
+# return the AST of the side that would be executed.  As a special
+# case, if the test expression is constant and FALSE and no else
+# statement was specified, the IF becomes a NOOP.
+
+#-------------------
+# LOOP Statement -- Technically, ASL doesn't have a LOOP
+# statement, but a WHILE statement that has a constant test
+# expression that is TRUE is an infinite loop and should be
+# expressed this way.  (Also, a FOR statement with a step of zero
+# is also an infinite loop.)
+
+    ( 'LOOP', <body> )
+
+# where,
+#   <body>  : The AST for the LOOP's body.
+
+#-------------------
+# NOOP Statement -- A do-nothing statement.  Used when some other
+# kind of statement collapses because of constants, etc.  (For
+# example, an IF statement with a constant FALSE test and no else
+# statement is really a no-op.)
+
+    ( 'NOOP', )
+
+#-------------------
+# READ Statement
+
+    ( 'READ', <lvalList> )
+
+# where,
+#   <lvalList>  : A list of ASTs for the lvalues of the read.
+
+#-------------------
+# SCOPE Statement -- This corresponds to the statement list.  We
+# call it a scope here to make it line up with the symbol table
+# construct better.
+
+    ( 'SCOPE', <name>, <stmtDeclList> )
+
+# where,
+#   <name>  : The name of the scope.  (See the Symbol Table
+#             discussion for more information on this.)
+#   <stmtDeclList> : A list of the ASTs for the statements and
+#             declarations occuring in this scope.
+
+#-------------------
+# VARIABLE_INIT -- Generate this AST form for a variable's
+# declaration.  It uses the given initial expression (or the
+# type's default value) to provide an initialization for the
+# variable.
+
+    ( 'VARIABLE_INIT', <name>, <init> )
+
+# where,
+#   <name>  : The qualified name of the variable.  (See the Symbol
+#             Table discussion for more information on this.)
+#   <init>  : The variable's initial value.
+
+#-------------------
+# WHILE Statement
+
+    ( 'WHILE', <test>, <body> )
+
+# where,
+#   <test>  : The AST for the WHILE's test expression.
+#   <body>  : The AST for the WHILE's body statement.
+#
+# As an optimization, check if the test expression is constant.
+# If so, if the value is TRUE, the WHILE becomes a LOOP.  If the
+# value is FALSE, the WHILE becomes a NOOP.
+
+#-------------------
+# WRITE Statement
+
+    ( 'WRITE', <exprList> )
+
+# where,
+#   <exprList>  : A list of ASTs for the expressions to be
+#                 written.  (This list may be empty.)
+
+#-----------------------------------------------------------

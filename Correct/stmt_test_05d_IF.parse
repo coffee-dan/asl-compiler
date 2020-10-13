@@ -1,29 +1,65 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [1]
-(   7)     STATEMENT (IF)
-(   7)       IDENTIFIER 'o'
-(   8)       STATEMENT LIST [1]
-(   8)         STATEMENT (EXPRESSION)
-(   8)           BINARY_OP '='
-(   8)             IDENTIFIER 'p'
-(   8)             BINARY_OP '*'
-(   8)               IDENTIFIER 'q'
-(   8)               LITERAL 'int' 17
-(   0)       ELIF LIST [2]
-(   9)         IDENTIFIER 'r'
+(   5)   STATEMENT LIST [10]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'o'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'p'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'q'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'r'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 's'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 't'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'u'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'v'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'w'
+(   0)       LITERAL 'int' 0
+(   9)     STATEMENT (IF)
+(   0)       TEST LIST [3]
+(   9)         IDENTIFIER 'o'
 (  10)         STATEMENT LIST [1]
 (  10)           STATEMENT (EXPRESSION)
 (  10)             BINARY_OP '='
-(  10)               IDENTIFIER 's'
-(  10)               BINARY_OP '-'
-(  10)                 IDENTIFIER 't'
-(  10)                 LITERAL 'int' 3
-(  11)         IDENTIFIER 'u'
+(  10)               IDENTIFIER 'p'
+(  10)               BINARY_OP '*'
+(  10)                 IDENTIFIER 'q'
+(  10)                 LITERAL 'int' 17
+(  11)         IDENTIFIER 'r'
 (  12)         STATEMENT LIST [1]
 (  12)           STATEMENT (EXPRESSION)
 (  12)             BINARY_OP '='
-(  12)               IDENTIFIER 'v'
-(  12)               BINARY_OP '+'
-(  12)                 LITERAL 'int' 7
-(  12)                 IDENTIFIER 'w'
+(  12)               IDENTIFIER 's'
+(  12)               BINARY_OP '-'
+(  12)                 IDENTIFIER 't'
+(  12)                 LITERAL 'int' 3
+(  13)         IDENTIFIER 'u'
+(  14)         STATEMENT LIST [1]
+(  14)           STATEMENT (EXPRESSION)
+(  14)             BINARY_OP '='
+(  14)               IDENTIFIER 'v'
+(  14)               BINARY_OP '+'
+(  14)                 LITERAL 'int' 7
+(  14)                 IDENTIFIER 'w'
 (   0)       STATEMENT LIST [0]

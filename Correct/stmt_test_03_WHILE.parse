@@ -1,11 +1,19 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [1]
-(   7)     STATEMENT (WHILE)
-(   7)       IDENTIFIER 'a'
-(   8)       STATEMENT LIST [1]
-(   8)         STATEMENT (EXPRESSION)
-(   8)           BINARY_OP '='
-(   8)             IDENTIFIER 'a'
-(   8)             BINARY_OP '+'
-(   8)               IDENTIFIER 'b'
-(   8)               LITERAL 'int' 3
+(   5)   STATEMENT LIST [3]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'b'
+(   0)       LITERAL 'int' 0
+(   9)     STATEMENT (WHILE)
+(   9)       IDENTIFIER 'a'
+(  10)       STATEMENT LIST [1]
+(  10)         STATEMENT (EXPRESSION)
+(  10)           BINARY_OP '='
+(  10)             IDENTIFIER 'a'
+(  10)             BINARY_OP '+'
+(  10)               IDENTIFIER 'b'
+(  10)               LITERAL 'int' 3

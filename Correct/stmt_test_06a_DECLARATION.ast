@@ -1,0 +1,9 @@
+# AST for 'stmt_test_06a_DECLARATION.asl'
+SCOPE 'SCOPE_1' <1>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [1] <ENVIRONMENT>
+  <Entry SCOPE_1(7) 'a':'int'>

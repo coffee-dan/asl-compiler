@@ -1,0 +1,17 @@
+# AST for 'stmt_test_06b_DECLARATION.asl'
+SCOPE 'SCOPE_1' <1>
+  VARIABLE_INIT SCOPE_1:a
+    BINARY_OP '-' 'int'
+      BINARY_OP '+' 'int'
+        LITERAL 'int', 1
+        LITERAL 'int', 2
+      BINARY_OP '/' 'int'
+        BINARY_OP '*' 'int'
+          LITERAL 'int', 3
+          LITERAL 'int', 4
+        LITERAL 'int', 5
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [1] <ENVIRONMENT>
+  <Entry SCOPE_1(7) 'a':'int'>

@@ -1,3 +1,6 @@
 (   5) PROGRAM
 (   5)   STATEMENT LIST [1]
-(   6)     STATEMENT (CONTINUE)
+(   6)     STATEMENT (WHILE)
+(   6)       LITERAL 'int' 1
+(   7)       STATEMENT LIST [1]
+(   7)         STATEMENT (CONTINUE)

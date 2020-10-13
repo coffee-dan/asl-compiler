@@ -1,12 +1,24 @@
 (   5) PROGRAM
-(   5)   STATEMENT LIST [2]
-(   6)     STATEMENT (EXPRESSION)
-(   6)       BINARY_OP '&&'
-(   6)         IDENTIFIER 'a'
-(   6)         IDENTIFIER 'b'
-(   7)     STATEMENT (EXPRESSION)
-(   7)       BINARY_OP '&&'
-(   7)         BINARY_OP '&&'
-(   7)           IDENTIFIER 'a'
-(   7)           IDENTIFIER 'b'
-(   7)         IDENTIFIER 'c'
+(   5)   STATEMENT LIST [5]
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'a'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'b'
+(   0)       LITERAL 'int' 0
+(   6)     STATEMENT (DECLARATION)
+(   6)       TYPE ('int')
+(   6)       IDENTIFIER 'c'
+(   0)       LITERAL 'int' 0
+(   8)     STATEMENT (EXPRESSION)
+(   8)       BINARY_OP '&&'
+(   8)         IDENTIFIER 'a'
+(   8)         IDENTIFIER 'b'
+(   9)     STATEMENT (EXPRESSION)
+(   9)       BINARY_OP '&&'
+(   9)         BINARY_OP '&&'
+(   9)           IDENTIFIER 'a'
+(   9)           IDENTIFIER 'b'
+(   9)         IDENTIFIER 'c'

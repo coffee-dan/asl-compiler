@@ -1,0 +1,122 @@
+#-----------------------------------------------------------
+# Symbol Table Summary
+# 2019-11-10
+#-----------------------------------------------------------
+# Notation
+#-------------------
+
+Inside angles, < ... >, indicates categories of information.
+
+ -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE --
+
+The following Symbol Table Summary is just that -- a summary.
+Read it carefully (and along with the AST summary).
+
+ -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE  -- NOTE --
+
+#-----------------------------------------------------------
+# Symbol Table Summary
+#-------------------
+# The SymbolTable class (and its associated classes) provides all
+# of the symbol table functionality required for this compiler
+# work.
+#
+#-----------------------------------------------------------
+# Symbol Table creation and dumping ...
+#-------------------
+#
+# Create a symbol table this way,
+#
+#   st = SymbolTable()
+#
+# Dump the contents of the symbol table (to stdout),
+#
+#   st.dump()
+#
+# If you want, you can open a file and pass it in like this,
+#
+#   with open( fileName, 'w' ) as fp :
+#     st.dump( fp = fp )
+#
+# (Take a look at miniFrontEnd.py to see an example of this.)
+#
+#-----------------------------------------------------------
+# Scopes open / close ...
+#-------------------
+# In ASL, every block statement is its own scope.  In the
+# semantic analysis routine, open this new scope like this,
+#
+#   name = st.openScope( lineNum )
+#
+# where,
+#   lineNum  : The line number that the scope starts on.  (Gets
+#              used in messages.)
+#   name     : The (unique) name of the scope.  (Gets used in
+#              messages, when making qualified names, and in the
+#              SCOPE AST forms.)
+#
+# Close the most recently opened scope like this,
+#
+#   st.closeScope()
+#
+#-----------------------------------------------------------
+# Declaring a name ...
+#-------------------
+# A name can be added to the current scope ('declared') like this,
+#
+#   entry = st.addName( name, type, lineNum )
+#
+# where,
+#   name     : The name to be declared in the scope.
+#   type     : The type of the declared name.
+#   lineNum  : The line number that the declaration starts on.
+#              (Gets used in messages.)
+#   entry    : The symbol table entry that is created for the
+#              declared name.  (Useful for getting the variable's
+#              'qualified name'.)
+#
+# Before declaring a name, however, you should ensure that it does
+# not already exist in the current scope.  If it does, that's a
+# semantic error (a redeclaration).
+#
+# You can check for this condition using this method,
+#
+#   st.nameExistsInCurrentScope( name )
+#
+# which returns True when the name is already declared in the
+# current scope.  Do this check before trying to add the name.
+#
+#-----------------------------------------------------------
+# Finding a name ...
+#-------------------
+# When processing a name in an expression, you can find out if it
+# has already been declared in an enclosing scope like this,
+#
+#   entry = st.findName( name )
+#
+# where,
+#   name     : The name to be looked up.
+#   entry    : The symbol table entry that was created for this
+#              name when it was declared.  If the name is not
+#              declared in any enclosing scope, entry will be
+#              None.
+#
+# Be sure to check that entry is not None before trying to use it.
+# If it is None, that means the name is not declared.
+#
+#-----------------------------------------------------------
+# Using an Entry ...
+#-------------------
+# Some of the above routines return a symbol table entry.  This
+# entry can be used to retrieve some useful properties about
+# a declared name.
+#
+#   entry.qualifiedName -- The declared name's 'qualified name'.
+#     The qualified name is unique because it has the name of the
+#     scope within which the variable name is declared prefixed.
+#
+#   entry.myType -- The type assigned to the name when declared.
+#
+# (An entry has other properties;  take a look at SymbolTable.py
+#  if you're curious.)
+#-----------------------------------------------------------

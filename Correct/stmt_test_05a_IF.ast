@@ -1,0 +1,23 @@
+# AST for 'stmt_test_05a_IF.asl'
+SCOPE 'SCOPE_1' <3>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:b
+    LITERAL 'int', 0
+  IF <1>
+      LVALUE 'SCOPE_1:a' 'int'
+      SCOPE 'SCOPE_2' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:b' 'int'
+          BINARY_OP '+' 'int'
+            LITERAL 'int', 1
+            LITERAL 'int', 2
+    SCOPE 'SCOPE_3' <0>
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [2] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>
+  <Entry SCOPE_1(6) 'b':'int'>
+Scope SCOPE_2(10) [0] <SCOPE_1>
+Scope SCOPE_3(0) [0] <SCOPE_1>

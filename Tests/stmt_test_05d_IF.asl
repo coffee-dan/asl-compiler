@@ -1,8 +1,10 @@
 // Dalio, Brian A.
 // dalioba
-// 2019-10-06
+// 2019-11-11
 
 {
+  int o; int p; int q; int r; int s; int t; int u; int v; int w;
+
   // IF with multiple ELIFs (but still no ELSE)
   if o then
     p = q*17

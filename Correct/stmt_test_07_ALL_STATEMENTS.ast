@@ -1,0 +1,106 @@
+# AST for 'stmt_test_07_ALL_STATEMENTS.asl'
+SCOPE 'SCOPE_1' <4>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:b
+    BINARY_OP '^' 'int'
+      LVALUE 'SCOPE_1:a' 'int'
+      LITERAL 'int', 16
+  VARIABLE_INIT SCOPE_1:c
+    BINARY_OP '*' 'int'
+      LVALUE 'SCOPE_1:b' 'int'
+      LITERAL 'int', 3
+  SCOPE 'SCOPE_2' <2>
+    VARIABLE_INIT SCOPE_2:i
+      LITERAL 'int', 0
+    FOR
+      LVALUE 'SCOPE_2:i' 'int'
+      BINARY_OP '+' 'int'
+        LVALUE 'SCOPE_1:a' 'int'
+        LVALUE 'SCOPE_1:b' 'int'
+      BINARY_OP '%' 'int'
+        LVALUE 'SCOPE_1:b' 'int'
+        LVALUE 'SCOPE_1:a' 'int'
+      BINARY_OP '-' 'int'
+        LVALUE 'SCOPE_1:a' 'int'
+        LVALUE 'SCOPE_1:b' 'int'
+      SCOPE 'SCOPE_3' <1>
+        SCOPE 'SCOPE_4' <2>
+          VARIABLE_INIT SCOPE_4:j
+            LITERAL 'int', 0
+          FOR
+            LVALUE 'SCOPE_4:j' 'int'
+            LITERAL 'int', 1
+            LITERAL 'int', 10
+            LITERAL 'int', 1
+            SCOPE 'SCOPE_5' <2>
+              WHILE
+                LVALUE 'SCOPE_1:a' 'int'
+                SCOPE 'SCOPE_6' <2>
+                  IF <4>
+                      BINARY_OP '-' 'int'
+                        LVALUE 'SCOPE_1:a' 'int'
+                        LITERAL 'int', 10
+                      SCOPE 'SCOPE_7' <1>
+                        BINARY_OP '=' 'int'
+                          LVALUE 'SCOPE_1:a' 'int'
+                          LITERAL 'int', 37
+                      BINARY_OP '+' 'int'
+                        LVALUE 'SCOPE_1:a' 'int'
+                        LITERAL 'int', 13
+                      SCOPE 'SCOPE_8' <1>
+                        BINARY_OP '=' 'int'
+                          LVALUE 'SCOPE_1:a' 'int'
+                          LITERAL 'int', 43
+                      LVALUE 'SCOPE_1:b' 'int'
+                      SCOPE 'SCOPE_9' <1>
+                        BREAK
+                      LVALUE 'SCOPE_1:c' 'int'
+                      SCOPE 'SCOPE_10' <1>
+                        CONTINUE
+                    SCOPE 'SCOPE_11' <1>
+                      BINARY_OP '=' 'int'
+                        LVALUE 'SCOPE_1:a' 'int'
+                        LITERAL 'int', 4
+                  BINARY_OP '=' 'int'
+                    LVALUE 'SCOPE_1:a' 'int'
+                    BINARY_OP '-' 'int'
+                      LVALUE 'SCOPE_1:a' 'int'
+                      LITERAL 'int', 1
+              IF <1>
+                  BINARY_OP '+' 'int'
+                    LVALUE 'SCOPE_1:c' 'int'
+                    LITERAL 'int', 16
+                  SCOPE 'SCOPE_12' <1>
+                    BINARY_OP '=' 'int'
+                      LVALUE 'SCOPE_1:b' 'int'
+                      BINARY_OP '-' 'int'
+                        LVALUE 'SCOPE_1:a' 'int'
+                        LVALUE 'SCOPE_1:c' 'int'
+                SCOPE 'SCOPE_13' <1>
+                  BINARY_OP '=' 'int'
+                    LVALUE 'SCOPE_1:c' 'int'
+                    BINARY_OP '+' 'int'
+                      LVALUE 'SCOPE_1:b' 'int'
+                      LVALUE 'SCOPE_1:a' 'int'
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [3] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>
+  <Entry SCOPE_1(7) 'b':'int'>
+  <Entry SCOPE_1(8) 'c':'int'>
+Scope SCOPE_2(0) [1] <SCOPE_1>
+  <Entry SCOPE_2(0) 'i':'int'>
+Scope SCOPE_3(11) [0] <SCOPE_2>
+Scope SCOPE_4(0) [1] <SCOPE_3>
+  <Entry SCOPE_4(0) 'j':'int'>
+Scope SCOPE_5(12) [0] <SCOPE_4>
+Scope SCOPE_6(13) [0] <SCOPE_5>
+Scope SCOPE_7(14) [0] <SCOPE_6>
+Scope SCOPE_8(17) [0] <SCOPE_6>
+Scope SCOPE_9(20) [0] <SCOPE_6>
+Scope SCOPE_10(23) [0] <SCOPE_6>
+Scope SCOPE_11(26) [0] <SCOPE_6>
+Scope SCOPE_12(33) [0] <SCOPE_5>
+Scope SCOPE_13(35) [0] <SCOPE_5>

@@ -1,0 +1,21 @@
+# AST for 'stmt_test_03_WHILE.asl'
+SCOPE 'SCOPE_1' <3>
+  VARIABLE_INIT SCOPE_1:a
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:b
+    LITERAL 'int', 0
+  WHILE
+    LVALUE 'SCOPE_1:a' 'int'
+    SCOPE 'SCOPE_2' <1>
+      BINARY_OP '=' 'int'
+        LVALUE 'SCOPE_1:a' 'int'
+        BINARY_OP '+' 'int'
+          LVALUE 'SCOPE_1:b' 'int'
+          LITERAL 'int', 3
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [2] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'a':'int'>
+  <Entry SCOPE_1(6) 'b':'int'>
+Scope SCOPE_2(10) [0] <SCOPE_1>

@@ -1,0 +1,37 @@
+# AST for 'stmt_test_05b_IF.asl'
+SCOPE 'SCOPE_1' <6>
+  VARIABLE_INIT SCOPE_1:c
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:d
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:e
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:f
+    LITERAL 'int', 0
+  VARIABLE_INIT SCOPE_1:g
+    LITERAL 'int', 0
+  IF <1>
+      LVALUE 'SCOPE_1:c' 'int'
+      SCOPE 'SCOPE_2' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_1:d' 'int'
+          BINARY_OP '^' 'int'
+            LVALUE 'SCOPE_1:e' 'int'
+            LITERAL 'int', 2
+    SCOPE 'SCOPE_3' <1>
+      BINARY_OP '=' 'int'
+        LVALUE 'SCOPE_1:f' 'int'
+        BINARY_OP '%' 'int'
+          LVALUE 'SCOPE_1:g' 'int'
+          LITERAL 'int', 4
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [5] <ENVIRONMENT>
+  <Entry SCOPE_1(6) 'c':'int'>
+  <Entry SCOPE_1(6) 'd':'int'>
+  <Entry SCOPE_1(6) 'e':'int'>
+  <Entry SCOPE_1(6) 'f':'int'>
+  <Entry SCOPE_1(6) 'g':'int'>
+Scope SCOPE_2(10) [0] <SCOPE_1>
+Scope SCOPE_3(12) [0] <SCOPE_1>
