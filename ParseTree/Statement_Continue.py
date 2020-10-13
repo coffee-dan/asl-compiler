@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -21,12 +21,10 @@ class Statement_Continue() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis required for a CONTINUE
-    #       statement.
-    #       Fix the return statement to return the correct AST
-    #       form for a CONTINUE statement.  (Hey, is it _already_
-    #       correct?  Are you _sure_?)
-
-    return ( 'CONTINUE', )
+    inLoop = kwargs.get( 'inLoop', False )
+    if inLoop :
+      return ( 'CONTINUE', )
+    else :
+      raise SemanticError( f'[{self.m_LineNum}] CONTINUE not within loop construct.' )
 
 #---------#---------#---------#---------#---------#--------#

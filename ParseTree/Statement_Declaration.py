@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -28,12 +28,20 @@ class Statement_Declaration() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of a variable declaration,
-    #       including its initialization expression.
-    #       Fix the return statement to return the correct AST
-    #       form for a DECLARATION statement (which is just a
-    #       VARIABLE_INIT now).
+    name = self.m_ID.m_ID
+    if not symbolTable.nameExistsInCurrentScope( name ) :
 
-    return ( 'VARIABLE_INIT', )
+      initExprAST = self.m_InitExpr.semantic( symbolTable, **kwargs )
+
+      if self.m_Type.isSame( initExprAST[2] ) :
+        entry = symbolTable.addName( name, self.m_Type, self.m_LineNum )
+      else :
+        initType = initExprAST[2].m_Kind
+        declType = self.m_Type.m_Kind
+        raise SemanticError( f'[{self.m_LineNum}] Initialization expression type \'{initType}\' not the same as declaration type \'{declType}\'.' )
+    else :
+      raise SemanticError( f'[{self.m_LineNum}] Name "{name}" redeclared.' )
+    
+    return ( 'VARIABLE_INIT', entry.qualifiedName, initExprAST )
 
 #---------#---------#---------#---------#---------#--------#

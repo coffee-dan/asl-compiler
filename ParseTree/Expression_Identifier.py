@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -22,11 +22,15 @@ class Expression_Identifier() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis required for an identifier
-    #       expression.
-    #       Fix the return statement to return the correct AST
-    #       form for an identifier expression.
+    entry = symbolTable.findName( self.m_ID )
+    if entry == None :
+      raise SemanticError( f'[{self.m_LineNum}] Undeclared identifier "{self.m_ID}".' )
+    
+    parts = [ 'LVALUE', entry.qualifiedName ]
+    isConst = False
+    value = None
 
-    return ( 'EXPR', )
+    # ( 'EXPR', [ 'LVALUE', 'Scope_1:a' ], 'int', False, None )
+    return ( 'EXPR', parts, entry.myType, isConst, value )
 
 #---------#---------#---------#---------#---------#--------#

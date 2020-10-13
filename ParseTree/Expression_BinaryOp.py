@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -12,11 +12,25 @@ from .Type         import Type
 INT_TYPE  = Type( 0, 'int' )
 REAL_TYPE = Type( 0, 'real' )
 
+logical_operators = [ r'&&', r'\|\|', r'==', r'<>', r'<', r'<=', r'>', r'>=' ]
+
 #---------#---------#---------#---------#---------#--------#
-def _binaryResultType( op, lType, rType ) :
-  # TODO: Using op, lType, and rType, return the proper type
-  #       of the result of using op on operands of the given
-  #       types.
+def _binaryResultType( op, lType, rType, lineNum ) :
+  if lType.m_Kind == 'string' or rType.m_Kind == 'string' :
+    raise SemanticError( f'[{lineNum}] Inappropriate types \'{lType.m_Kind}\', \'{rType.m_Kind}\' for binary operator "{op}".' )
+
+  if op in logical_operators and ( lType.isReal() or rType.isReal() ) :
+    raise SemanticError( 'error, real does not support logical operators' )
+
+  if lType.isSame( rType ) :
+    return lType
+  else :
+    # strongly typed language
+    if op == '=' :
+      raise SemanticError( 'error, this is a strongly typed language' )
+    else :
+      return REAL_TYPE
+
 
 #---------#---------#---------#---------#---------#--------#
 class Expression_BinaryOp() :
@@ -38,12 +52,19 @@ class Expression_BinaryOp() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis required for a binary op
-    #       expression.  (You will benefit from writing and using
-    #       the _binaryResultType() function above.)
-    #       Fix the return statement to return the correct AST
-    #       form for a binary op expression.
+    if kwargs.get( 'bannedVars') != None :
+      if self.m_Op == '=' :
+        # check if unqualified var name matches current loop variable
+        if self.m_Left.m_ID in kwargs['bannedVars'] :
+          if symbolTable.nameExistsInCurrentScope( self.m_Left.m_ID ) == False :
+            raise SemanticError( f'[{self.m_LineNum}] FOR index variable on LHS of assignment.' )
 
-    return ( 'EXPR', )
+    leftAST = self.m_Left.semantic( symbolTable, **kwargs )
+    rightAST = self.m_Right.semantic( symbolTable, **kwargs )
+    _type = _binaryResultType( self.m_Op, leftAST[2], rightAST[2], self.m_LineNum )
+    isConst = False
+    value = None
+
+    return ( 'EXPR', [ 'BINARY_OP', self.m_Op, leftAST, rightAST ], _type, isConst, value )
 
 #---------#---------#---------#---------#---------#--------#

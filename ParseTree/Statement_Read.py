@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -28,11 +28,19 @@ class Statement_Read() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of each item passed to the
-    #       READ.
-    #       Fix the return statement to return the correct AST
-    #       form for a READ statement.
+    lvalASTs = []
+    for identifer in self.m_IDList :
+      if symbolTable.findName( identifer.m_ID ) == None :
+        raise SemanticError( f'{self.m_NodeType} error {identifer.m_ID} does not exist in the symbol table, at line: {self.m_LineNum}' )
+      else :
+        lvalASTs.append( identifer.semantic( symbolTable, **kwargs ) )
 
-    return ( 'READ', )
+      if kwargs.get( 'bannedVars') != None :
+        # check if unqualified var name matches current loop variable
+        if identifer.m_ID in kwargs['bannedVars'] :
+          if symbolTable.nameExistsInCurrentScope( identifer.m_ID ) == False :
+            raise SemanticError( f'[{self.m_LineNum}] FOR index variable in READ argument list.' )
+
+    return ( 'READ', lvalASTs )
 
 #---------#---------#---------#---------#---------#--------#

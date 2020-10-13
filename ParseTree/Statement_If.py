@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -30,13 +30,17 @@ class Statement_If() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of each test expression and
-    #       statement list that's part of the IF / THEN / ELIF /
-    #       THEN chain.  Do the semantic analysis of the ELSE
-    #       statement list.
-    #       Fix the return statement to return the correct AST
-    #       form for an IF statement.
+    testList = []
+    for ( test, stmtList ) in self.m_TestList :
+      exprAST = test.semantic( symbolTable, **kwargs )
+      if not exprAST[2].m_Kind == 'int' :
+        raise SemanticError( f'[{self.m_LineNum}] IF test expression must be of integer type, not \'{exprAST[2].m_Kind}\'.' )
+      sListAST = stmtList.semantic( symbolTable, **kwargs )
+      testList.append( ( exprAST, sListAST ) )
 
-    return ( 'IF', )
+    elseStmtList = self.m_ElseStmtList.semantic( symbolTable, **kwargs )
+
+    #( 'IF', <testList>, <else> )
+    return ( 'IF', testList, elseStmtList )
 
 #---------#---------#---------#---------#---------#--------#

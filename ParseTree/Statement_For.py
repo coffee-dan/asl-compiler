@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -32,11 +32,38 @@ class Statement_For() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of the id, start expression,
-    #       stop expression, step expression, and body of the FOR.
-    #       Fix the return statement to return the correct AST
-    #       form for a FOR statement.
+    start = self.m_StartExpr.semantic( symbolTable, **kwargs )
+    if start[2].m_Kind != 'int' :
+      raise SemanticError( f'[{self.m_LineNum}] FOR start expression type must be integer, not \'{start[2].m_Kind}\'.' )
 
-    return ( 'FOR', )
+    stop = self.m_StopExpr.semantic( symbolTable, **kwargs )
+    if stop [2].m_Kind != 'int' :
+      raise SemanticError( f'[{self.m_LineNum}] FOR stop expression type must be integer, not \'{stop[2].m_Kind}\'.' )
+    
+    step = self.m_StepExpr.semantic( symbolTable, **kwargs )
+    if step[2].m_Kind != 'int' :
+      raise SemanticError( f'[{self.m_LineNum}] FOR step expression type must be integer, not \'{step[2].m_Kind}\'.' )
+
+    index = self.m_LoopVar.semantic( symbolTable, **kwargs )
+
+    # kwargs is a dict
+    # python always passes kwargs as reference
+    new_kwargs = kwargs.copy()
+
+    # pass var name down the tree
+    # check var list exists
+    if kwargs.get( 'bannedVars') != None :
+      if self.m_LoopVar.m_ID not in kwargs['bannedVars'] :
+        kwargs['bannedVars'].append( self.m_LoopVar.m_ID )
+    else:
+      # create list of vars and append current var
+      bannedVars = [self.m_LoopVar.m_ID]
+      new_kwargs['bannedVars'] = bannedVars
+      
+    new_kwargs[ 'inLoop' ] = True
+
+    body = self.m_StmtList.semantic( symbolTable, **new_kwargs )
+
+    return ( 'FOR', index, start, stop, step, body )
 
 #---------#---------#---------#---------#---------#--------#

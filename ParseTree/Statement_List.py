@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -24,11 +24,9 @@ class Statement_List() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Open a scope, do the semantic analysis of each item
-    #       in the statement list, then close the scope.
-    #       Fix the return statement to return the correct AST
-    #       form for a statement list.
-
-    return ( 'SCOPE', )
+    name = symbolTable.openScope( self.m_LineNum )
+    sListASTs = [ s.semantic( symbolTable, **kwargs ) for s in self.m_StmtList ]
+    symbolTable.closeScope()
+    return ( 'SCOPE', name, sListASTs )
 
 #---------#---------#---------#---------#---------#--------#

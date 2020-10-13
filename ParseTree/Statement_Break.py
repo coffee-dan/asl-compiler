@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -21,12 +21,10 @@ class Statement_Break() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis required for a BREAK
-    #       statement.
-    #       Fix the return statement to return the correct AST
-    #       form for a BREAK statement.  (Hey, is it _already_
-    #       correct?  Are you _sure_?)
-
-    return ( 'BREAK', )
+    inLoop = kwargs.get( 'inLoop', False )
+    if inLoop :
+      return ( 'BREAK', )
+    else :
+      raise SemanticError( f'[{self.m_LineNum}] BREAK not within loop construct.' )
 
 #---------#---------#---------#---------#---------#--------#

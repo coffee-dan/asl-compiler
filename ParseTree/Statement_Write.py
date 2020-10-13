@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -27,11 +27,7 @@ class Statement_Write() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of each expression passed
-    #       to the WRITE.
-    #       Fix the return statement to return the correct AST
-    #       form for a WRITE statement.
-
-    return ( 'WRITE', )
+    exprASTs = [ s.semantic( symbolTable, **kwargs ) for s in self.m_ExprList ]
+    return ( 'WRITE', exprASTs )
 
 #---------#---------#---------#---------#---------#--------#

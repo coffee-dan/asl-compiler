@@ -1,6 +1,6 @@
-# Dalio, Brian A.
-# dalioba
-# 2019-11-12
+# Ramirez, Daniel G.
+# dgr2815
+# 2019-11-16
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -26,11 +26,15 @@ class Statement_While() :
 
   #---------------------------------------
   def semantic( self, symbolTable, **kwargs ) :
-    # TODO: Do the semantic analysis of the test expression and
-    #       each statement in the body of the WHILE.
-    #       Fix the return statement to return the correct AST
-    #       form for a WHILE statement.
+    test = self.m_TestExpr.semantic( symbolTable, **kwargs )
+    if test[2].m_Kind != 'int' :
+      raise SemanticError( f'[{self.m_LineNum}] WHILE test expression must be of integer type, not \'{test[2].m_Kind}\'.' )
 
-    return ( 'WHILE', )
+    new_kwargs = kwargs.copy()
+    new_kwargs[ 'inLoop' ] = True
+
+    body = self.m_StmtList.semantic( symbolTable, **new_kwargs )
+
+    return ( 'WHILE', test, body )
 
 #---------#---------#---------#---------#---------#--------#
