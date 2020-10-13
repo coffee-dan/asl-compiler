@@ -1,10 +1,11 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
 from .common       import *
+from Exceptions    import *
 
 #---------#---------#---------#---------#---------#--------#
 class Statement_For() :
@@ -28,5 +29,14 @@ class Statement_For() :
     self.m_StopExpr.dump( indent+1, fp = fp )
     self.m_StepExpr.dump( indent+1, fp = fp )
     self.m_StmtList.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Do the semantic analysis of the id, start expression,
+    #       stop expression, step expression, and body of the FOR.
+    #       Fix the return statement to return the correct AST
+    #       form for a FOR statement.
+
+    return ( 'FOR', )
 
 #---------#---------#---------#---------#---------#--------#

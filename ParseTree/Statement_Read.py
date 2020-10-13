@@ -1,10 +1,11 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
 from .common       import *
+from Exceptions    import *
 
 #---------#---------#---------#---------#---------#--------#
 class Statement_Read() :
@@ -24,5 +25,14 @@ class Statement_Read() :
 
     for i in self.m_IDList :
       i.dump( indent+2, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Do the semantic analysis of each item passed to the
+    #       READ.
+    #       Fix the return statement to return the correct AST
+    #       form for a READ statement.
+
+    return ( 'READ', )
 
 #---------#---------#---------#---------#---------#--------#

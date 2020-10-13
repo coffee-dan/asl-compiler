@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-11
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -20,5 +20,9 @@ class Statement_Expression() :
       'STATEMENT (EXPRESSION)', fp )
 
     self.m_Expr.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    return self.m_Expr.semantic( symbolTable, **kwargs )
 
 #---------#---------#---------#---------#---------#--------#

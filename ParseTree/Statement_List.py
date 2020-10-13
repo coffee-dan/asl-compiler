@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -21,5 +21,14 @@ class Statement_List() :
 
     for s in self.m_StmtList :
       s.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Open a scope, do the semantic analysis of each item
+    #       in the statement list, then close the scope.
+    #       Fix the return statement to return the correct AST
+    #       form for a statement list.
+
+    return ( 'SCOPE', )
 
 #---------#---------#---------#---------#---------#--------#

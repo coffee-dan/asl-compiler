@@ -1,10 +1,11 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
 from .common       import *
+from Exceptions    import *
 
 #---------#---------#---------#---------#---------#--------#
 class Statement_While() :
@@ -22,5 +23,14 @@ class Statement_While() :
 
     self.m_TestExpr.dump( indent+1, fp = fp )
     self.m_StmtList.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Do the semantic analysis of the test expression and
+    #       each statement in the body of the WHILE.
+    #       Fix the return statement to return the correct AST
+    #       form for a WHILE statement.
+
+    return ( 'WHILE', )
 
 #---------#---------#---------#---------#---------#--------#

@@ -1,8 +1,9 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-11
 #---------#---------#---------#---------#---------#--------#
 import logging
+import re
 import sys
 import traceback
 
@@ -11,10 +12,20 @@ import ply.yacc
 import ply.lex
 
 from pathlib            import Path
-from time               import time
+from time               import localtime, strftime, time
 
+from AST                import AST
 from Exceptions         import *
 from ParseTree          import *
+from SymbolTable        import SymbolTable
+
+#---------#---------#---------#---------#---------#--------#
+TYPE_INT     = Type( 0, 'int' )
+TYPE_REAL    = Type( 0, 'real' )
+TYPE_STRING  = Type( 0, 'string' )
+
+LITERAL_ZERO = Expression_Literal( 0, TYPE_INT, 0 )
+LITERAL_ONE  = Expression_Literal( 0, TYPE_INT, 1 )
 
 #---------#---------#---------#---------#---------#--------#
 # Lexical analysis section
@@ -84,15 +95,63 @@ def t_INT_LITERAL( t ) :
   t.value = int( t.value )
   return t
 
-# TODO: Add t_STRING_LITERAL( t ) here.
-#       Ensure that you deal with empty strings and strings
-#       that use the escape sequences \", \\, \a, \b, \e, \f, \n,
-#       \r, \t, and \v.  Note that Python does not support all
-#       these escapes so you'll have to hand-code some of them.
+STRING_ESCAPES = {
+  'a'  : '\a',
+  'b'  : '\b',
+  'e'  : '\x1B',
+  'f'  : '\f',
+  'n'  : '\n',
+  'r'  : '\r',
+  't'  : '\t',
+  'v'  : '\v',
+  '\\' : '\\',
+  '"'  : '"',
+  "'"  : "'",
+  '?'  : '?',
+  }
+
 def t_STRING_LITERAL( t ) :
-	r'"([^"\\]|(\\["\\abefnrtv])|(\\[xX][0-9a-fA-F][0-9a-fA-F]))*"'
-	t.value = str( t.value )
-	return t
+  r'"([^"\n\\]|(\\[abefnrtv\\"?])|(\\x[\da-fA-F]{2})|(\\[0-7]{1,3}))*"'
+  t.value = t.value[1:-1]
+
+  outStr = ''
+  i = 0
+
+  while i < len( t.value ) :
+    if t.value[i] == '\\' :
+      if t.value[i+1] in STRING_ESCAPES :
+        outStr += STRING_ESCAPES[ t.value[i+1] ]
+        i += 2
+
+      elif t.value[i+1] == 'x' :
+        outStr += chr( int( t.value[i+2:i+4], 16 ) )
+        i += 4
+
+      elif t.value[i+1] in "01234567" :
+        # Could be 1, 2, or 3 octal digits.
+        m = re.search( '^(?P<oits>[0-7]{1,3})', t.value[i+1:] )
+        if m :
+          oits = m.group( 'oits' )
+          chrval = int( oits, 8 )
+          if chrval > 255 :
+            raise LexicalError( f'"\\{oits}" is too large for an octal escape sequence.' )
+
+          outStr += chr( chrval )
+          i += len( oits ) + 1
+
+        else :
+          raise LexicalError( f'Unable to interpret "{t.value[i:]}" as an octal escape sequence.' )
+
+      else :
+        raise LexicalError( f'Unable to interpret "{t.value[i:]}" as an escape sequence.' )
+
+    else :
+      outStr += t.value[i]
+      i += 1
+
+  t.value = outStr
+
+  return t
 
 #-------------------
 # Ignored characters
@@ -183,7 +242,7 @@ def p_init_opt( p ) :
   '''init_opt : epsilon
               | ASSIGN expression'''
   if p[1] is None :
-    p[0] = Expression_Literal( 0, Type( 0, 'int' ), 0 )
+    p[0] = LITERAL_ZERO
 
   else :
     p[0] = p[2]
@@ -196,13 +255,15 @@ def p_statement_expr( p ) :
 # For statement
 def p_statement_for( p ) :
   'statement : FOR identifier ASSIGN expression TO expression step_opt DO statement_list semicolon_opt END FOR'
-  p[0] = Statement_For( p.lineno( 1 ), p[2], p[4], p[6], p[7], Statement_List( p.lineno( 9 ), p[9] ) )
+  indexDecl = Statement_Declaration( 0, TYPE_INT, p[2], LITERAL_ZERO )
+  forStmt   = Statement_For( p.lineno( 1 ), p[2], p[4], p[6], p[7], Statement_List( p.lineno( 9 ), p[9] ) )
+  p[0]      = Statement_List( 0, [ indexDecl, forStmt ] )
 
 def p_step_opt( p ) :
   '''step_opt : epsilon
               | BY expression'''
   if p[1] == None :
-    p[0] = Expression_Literal( 0, Type( 0, 'int' ), 1 )
+    p[0] = LITERAL_ONE
 
   else :
     p[0] = p[2]
@@ -210,7 +271,8 @@ def p_step_opt( p ) :
 # If statement
 def p_statement_if( p ) :
   'statement : IF expression THEN statement_list semicolon_opt elif_opt else_opt END IF'
-  p[0] = Statement_If( p.lineno( 1 ), p[2], Statement_List( p.lineno( 4 ), p[4] ), p[6], p[7] )
+  testList = [ ( p[2], Statement_List( p.lineno( 4 ), p[4] ) ) ] + p[6]
+  p[0] = Statement_If( p.lineno( 1 ), testList, p[7] )
 
 def p_elif_opt( p ) :
   '''elif_opt : epsilon
@@ -334,68 +396,17 @@ def p_expression_group( p ) :
 # Integer literal
 def p_expression_int_literal( p ) :
   'expression : INT_LITERAL'
-  p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'int' ), p[1] )
+  p[0] = Expression_Literal( p.lineno( 1 ), TYPE_INT, p[1] )
 
 # Real literal
 def p_expression_real_literal( p ) :
   'expression : REAL_LITERAL'
-  p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'real' ), p[1] )
+  p[0] = Expression_Literal( p.lineno( 1 ), TYPE_REAL, p[1] )
 
 # String literal
-# TODO: Add t_STRING_LITERAL( t ) here.
-#       Ensure that you deal with empty strings and strings
-#       that use the escape sequences \", \\, \a, \b, \e, \f, \n,
-#       \r, \t, and \v.  Note that Python does not support all
-#       these escapes so you'll have to hand-code some of them.
-
-# TODO: Put p_expression_string_literal( p ) here.
-#       Use 'string' as the name of the type. (Look at the
-#       INT_LITERAL and REAL_LITERAL cases for examples of what
-#       this should look like.
 def p_expression_string_literal( p ) :
-	'expression : STRING_LITERAL'
-	string_parts = []
-	p[1] = p[1][1:-1]
-
-	i = 0
-	while i < len( p[1] ) :
-		if p[1][i] == '\\' :
-
-			escape_char = p[1][ i+1 ]
-			i += 1
-
-			if escape_char == '"' :
-				string_parts.append( '"' )
-			elif escape_char == '\\\\' :
-				string_parts.append( r'\\' )
-			elif escape_char == 'a' :
-				string_parts.append( '\x07' )
-			elif escape_char == 'b' :
-				string_parts.append( '\x08' )
-			elif escape_char == 'e' :
-				string_parts.append( '\x1b' )
-			elif escape_char == 'f' :
-				string_parts.append( '\x0c' )
-			elif escape_char == 'n' :
-				string_parts.append( '\n' )
-			elif escape_char == 'r' :
-				string_parts.append( '\r' )
-			elif escape_char == 't' :
-				string_parts.append( '\t' )
-			elif escape_char == 'v' :
-				string_parts.append( '\x0b' )
-			elif escape_char == 'x' or escape_char == 'X' :
-				escape_sequence = f'\\x{p[1][ i+1 ]}{p[1][ i+2 ]}'
-				intended_char = bytes( escape_sequence, 'utf-8' ).decode( 'unicode_escape' )
-				i += 2
-				string_parts.append( intended_char )
-			else :
-				string_parts.append( escape_char )
-		else :
-			string_parts.append( p[1][i] )
-		i += 1
-	string = ''.join( string_parts )
-	p[0] = Expression_Literal( p.lineno( 1 ), Type( p.lineno( 1 ), 'string' ), string )
+  'expression : STRING_LITERAL'
+  p[0] = Expression_Literal( p.lineno( 1 ), TYPE_STRING, p[1] )
 
 # Name
 def p_expression_id( p ) :
@@ -441,33 +452,60 @@ def _main( inputFileName ) :
   log = logging.getLogger()
 
   begin = time()
+  timestamp = strftime( '%Y-%m-%d %H:%M:%S', localtime( begin ) )
 
   fileName  = str( Path( inputFileName ).name )
   parseFile = str( Path( inputFileName ).with_suffix( '.parse' ) )
+  ASTFile   = str( Path( inputFileName ).with_suffix( '.ast' ) )
 
-  print( f'* Reading source file {inputFileName!r} ...' )
+  print( f'#----------\n# Begin at {timestamp}' )
+  print( f'# Reading source file {inputFileName!r} ...' )
 
   try :
     strt = time()
     with open( inputFileName, 'r' ) as fp :
       data = fp.read()
 
-    print( f'    Read succeeded.  ({time()-strt:.3f}s)\n* Beginning parse ...' )
+    print( f'#    Read succeeded.  ({time()-strt:.3f}s)' )
+    print( f'# Beginning parse ...' )
 
     strt    = time()
     lexer   = ply.lex.lex( debug = debug, debuglog = log )
     parser  = ply.yacc.yacc( debug = debug, debuglog = log )
+
     program = parser.parse( data, tracking = True, debug = log )
 
-    print( f'    Parse succeeded.  ({time()-strt:.3f}s)\n* Beginning parse dump to {parseFile!r} ...' )
+    print( f'#    Parse succeeded.  ({time()-strt:.3f}s)' )
+    print( f'# Beginning parse tree dump to {parseFile!r} ...' )
 
     strt = time()
     with open( parseFile, 'w' ) as fp :
       program.dump( fp = fp )
 
-    print( f'    Parse dumped.  ({time()-strt:.3f}s)' )
+    print( f'#    Parse dumped.  ({time()-strt:.3f}s)' )
+    print( f'# Beginning semantic analysis ...' )
 
-    total = time() - begin
+    strt = time()
+    symbolTable = SymbolTable()
+    ast = program.semantic( symbolTable )
+
+    print( f'#   Semantic analysis complete.  ({time()-strt:.3f}s)' )
+    print( f'# Beginning AST/Symbol Table dump to {ASTFile!r} ...' )
+
+    strt = time()
+    with open( ASTFile, 'w' ) as fp :
+      print( f'# AST for {fileName!r}', file = fp )
+      AST().dump( ast, fp = fp )
+
+      print( '\n# Symbol table', file = fp )
+      symbolTable.dump( fp = fp )
+
+    print( f'#   AST/Symbol Table dumped.  ({time()-strt:.3f}s)' )
+
+    finish = time()
+    total = finish - begin
+    timestamp = strftime( '%Y-%m-%d %H:%M:%S', localtime( finish ) )
+    print( f'# End at {timestamp}' )
     print( f'# Total time {total:.3f}s.\n#----------')
 
   except FileNotFoundError as e :
@@ -476,6 +514,12 @@ def _main( inputFileName ) :
 
   except LexicalError as e :
     print( 'Exception detected during lexical analysis.' )
+    print( e )
+    #traceback.print_exc()
+    sys.exit( 1 )
+
+  except SemanticError as e :
+    print( 'Exception detected during semantic analysis.' )
     print( e )
     #traceback.print_exc()
     sys.exit( 1 )

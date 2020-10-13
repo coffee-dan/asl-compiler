@@ -1,10 +1,11 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
 from .common       import *
+from Exceptions    import *
 
 #---------#---------#---------#---------#---------#--------#
 class Statement_Declaration() :
@@ -24,5 +25,15 @@ class Statement_Declaration() :
     self.m_Type.dump( indent+1, fp = fp )
     self.m_ID.dump( indent+1, fp = fp )
     self.m_InitExpr.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Do the semantic analysis of a variable declaration,
+    #       including its initialization expression.
+    #       Fix the return statement to return the correct AST
+    #       form for a DECLARATION statement (which is just a
+    #       VARIABLE_INIT now).
+
+    return ( 'VARIABLE_INIT', )
 
 #---------#---------#---------#---------#---------#--------#

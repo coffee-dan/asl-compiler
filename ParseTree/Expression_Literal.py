@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-12
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -24,5 +24,14 @@ class Expression_Literal() :
     else :
       dumpHeaderLine( indent, self.m_LineNum,
         f'LITERAL {self.m_Type!r} {self.m_Value!r}', fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable, **kwargs ) :
+    # TODO: Do the semantic analysis required for a literal
+    #       expression.
+    #       Fix the return statement to return the correct AST
+    #       form for a literal expression.
+
+    return ( 'EXPR', )
 
 #---------#---------#---------#---------#---------#--------#

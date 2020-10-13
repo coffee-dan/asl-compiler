@@ -1,6 +1,6 @@
-# Ramirez, Daniel G.
-# dgr2815
-# 2019-11-01
+# Dalio, Brian A.
+# dalioba
+# 2019-11-07
 #---------#---------#---------#---------#---------#--------#
 import sys
 
@@ -20,5 +20,9 @@ class Program() :
       'PROGRAM', fp )
 
     self.m_StmtList.dump( indent+1, fp = fp )
+
+  #---------------------------------------
+  def semantic( self, symbolTable ) :
+    return self.m_StmtList.semantic( symbolTable )
 
 #---------#---------#---------#---------#---------#--------#
