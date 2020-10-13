@@ -1,0 +1,21 @@
+# AST for 'semantic_test_FAIL_09e_BINARY.asl'
+SCOPE 'SCOPE_1' <1>
+  SCOPE 'SCOPE_2' <2>
+    VARIABLE_INIT SCOPE_2:i
+      LITERAL 'int', 0
+    FOR
+      LVALUE 'SCOPE_2:i' 'int'
+      LITERAL 'int', 1
+      LITERAL 'int', 10
+      LITERAL 'int', 1
+      SCOPE 'SCOPE_3' <1>
+        BINARY_OP '=' 'int'
+          LVALUE 'SCOPE_2:i' 'int'
+          LITERAL 'int', 3
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [0] <ENVIRONMENT>
+Scope SCOPE_2(0) [1] <SCOPE_1>
+  <Entry SCOPE_2(0) 'i':'int'>
+Scope SCOPE_3(8) [0] <SCOPE_2>

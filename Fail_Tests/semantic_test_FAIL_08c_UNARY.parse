@@ -1,0 +1,5 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (EXPRESSION)
+(   7)       UNARY_OP '!'
+(   7)         LITERAL 'string' 'Hi, there!'

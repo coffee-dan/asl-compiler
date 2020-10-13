@@ -1,0 +1,16 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   0)     STATEMENT LIST [2]
+(   0)       STATEMENT (DECLARATION)
+(   0)         TYPE ('int')
+(   7)         IDENTIFIER 'i'
+(   0)         LITERAL 'int' 0
+(   7)       STATEMENT (FOR)
+(   7)         IDENTIFIER 'i'
+(   7)         LITERAL 'int' 1
+(   7)         LITERAL 'int' 10
+(   0)         LITERAL 'int' 1
+(   8)         STATEMENT LIST [1]
+(   8)           STATEMENT (READ)
+(   8)             ID LIST [1]
+(   8)               IDENTIFIER 'i'

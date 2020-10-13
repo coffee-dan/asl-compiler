@@ -1,0 +1,6 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (DECLARATION)
+(   7)       TYPE ('int')
+(   7)       IDENTIFIER 'i'
+(   7)       LITERAL 'real' 1.2000000000000000e+01

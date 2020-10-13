@@ -1,0 +1,7 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (WHILE)
+(   7)       LITERAL 'string' 'Hi, there!'
+(   8)       STATEMENT LIST [1]
+(   8)         STATEMENT (EXPRESSION)
+(   8)           LITERAL 'int' 12

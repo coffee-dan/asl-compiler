@@ -1,0 +1,13 @@
+# AST for 'semantic_test_FAIL_03_IF.asl'
+SCOPE 'SCOPE_1' <1>
+  IF <1>
+      LITERAL 'string', 'Hi, there!'
+      SCOPE 'SCOPE_2' <1>
+        LITERAL 'int', 12
+    SCOPE 'SCOPE_3' <0>
+
+# Symbol table
+Scope ENVIRONMENT(0) [0] <NONE>
+Scope SCOPE_1(5) [0] <ENVIRONMENT>
+Scope SCOPE_2(8) [0] <SCOPE_1>
+Scope SCOPE_3(0) [0] <SCOPE_1>

@@ -1,0 +1,4 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   7)     STATEMENT (EXPRESSION)
+(   7)       IDENTIFIER 'i'

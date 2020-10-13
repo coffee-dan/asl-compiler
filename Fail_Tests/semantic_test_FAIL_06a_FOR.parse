@@ -1,0 +1,15 @@
+(   5) PROGRAM
+(   5)   STATEMENT LIST [1]
+(   0)     STATEMENT LIST [2]
+(   0)       STATEMENT (DECLARATION)
+(   0)         TYPE ('int')
+(   7)         IDENTIFIER 'i'
+(   0)         LITERAL 'int' 0
+(   7)       STATEMENT (FOR)
+(   7)         IDENTIFIER 'i'
+(   7)         LITERAL 'real' 1.2000000000000000e+01
+(   7)         LITERAL 'int' 22
+(   7)         LITERAL 'int' 3
+(   8)         STATEMENT LIST [1]
+(   8)           STATEMENT (EXPRESSION)
+(   8)             LITERAL 'string' 'Hi, there!'
